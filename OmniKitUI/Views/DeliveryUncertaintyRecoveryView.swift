@@ -22,7 +22,7 @@ struct DeliveryUncertaintyRecoveryView: View {
 
     var body: some View {
         GuidePage(content: {
-            Text(String(format: LocalizedString("%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display.", comment: "Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name)"), self.model.appName, self.uncertaintyDateLocalizedString, self.model.appName))
+            Text(String(format: LocalizedString("自 %2$@ 以来，%1$@ 一直无法与您身上的 pod 通信。\n\n如果不与 pod 通信，应用程序将无法继续发送胰岛素输送命令或显示有关您的活性胰岛素的准确的最新信息 或 Pod 输送的胰岛素。\n\n在接下来的 6 小时或更长时间内密切监测您的血糖，因为您体内可能有也可能没有 %3$@ 无法显示的胰岛素在积极工作。", comment: "Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name)"), self.model.appName, self.uncertaintyDateLocalizedString, self.model.appName))
                 .padding([.top, .bottom])
             Section(header: HStack {
                 FrameworkLocalText("设备", comment: "Header for devices section of RileyLinkSetupView")

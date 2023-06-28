@@ -117,7 +117,7 @@ struct OmnipodSettingsView: View  {
                         .font(.system(size: 34))
                         .fixedSize()
                         .foregroundColor(viewModel.suspendResumeButtonColor(guidanceColors: guidanceColors))
-                    FrameworkLocalText("Insulin\nSuspended", comment: "Text shown in insulin delivery space when insulin suspended")
+                    FrameworkLocalText("胰岛素\n暂停", comment: "Text shown in insulin delivery space when insulin suspended")
                         .fontWeight(.bold)
                         .fixedSize()
                 }
@@ -137,7 +137,7 @@ struct OmnipodSettingsView: View  {
                         .font(.system(size: 34))
                         .fixedSize()
                         .foregroundColor(guidanceColors.critical)
-                    FrameworkLocalText("No\nDelivery", comment: "Text shown in insulin remaining space when no pod is paired")
+                    FrameworkLocalText("没有\n送货", comment: "Text shown in insulin remaining space when no pod is paired")
                         .fontWeight(.bold)
                         .fixedSize()
                 }

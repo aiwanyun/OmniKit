@@ -60,7 +60,7 @@ extension PodCommsError: LocalizedError {
         case .unknownResponseType:
             return nil
         case .invalidAddress(address: let address, expectedAddress: let expectedAddress):
-            return String(format: LocalizedString("Invalid address 0x%x. Expected 0x%x", comment: "Error message for when unexpected address is received (1: received address) (2: expected address)"), address, expectedAddress)
+            return String(format: LocalizedString("地址 0x%x 无效。 应为 0x%x", comment: "Error message for when unexpected address is received (1: received address) (2: expected address)"), address, expectedAddress)
         case .noRileyLinkAvailable:
             return LocalizedString("没有Rileylink可用", comment: "Error message shown when no response from pod was received")
         case .unfinalizedBolus:
@@ -81,7 +81,7 @@ extension PodCommsError: LocalizedError {
         case .unacknowledgedCommandPending:
             return LocalizedString("通信问题：未经认可的命令未决。", comment: "Error message when command is rejected because an unacknowledged command is pending.")
         case .rejectedMessage(let errorCode):
-            return String(format: LocalizedString("Command error %1$u", comment: "Format string for invalid message error code (1: error code number)"), errorCode)
+            return String(format: LocalizedString("命令错误%1$u", comment: "Format string for invalid message error code (1: error code number)"), errorCode)
         case .podChange:
             return LocalizedString("意外的POD更改", comment: "Format string for unexpected pod change")
         case .activationTimeExceeded:

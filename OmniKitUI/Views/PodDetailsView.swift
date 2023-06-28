@@ -80,7 +80,7 @@ struct PodDetailsView: View {
     
     var lastStatusText: String {
         if let lastStatus = podDetails.lastStatus, let ageString = statusAgeFormatter.string(from: Date().timeIntervalSince(lastStatus)) {
-            return String(format: LocalizedString("%@ ago", comment: "Format string for last status date on pod details screen"), ageString)
+            return String(format: LocalizedString("%@ 前", comment: "Format string for last status date on pod details screen"), ageString)
         } else {
             return LocalizedString("na", comment: "String shown on pod details for last status date when not available.")
         }

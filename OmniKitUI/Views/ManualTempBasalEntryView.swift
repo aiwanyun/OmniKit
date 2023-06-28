@@ -134,9 +134,9 @@ struct ManualTempBasalEntryView: View {
 
     func errorMessage(error: PumpManagerError) -> Text {
         if let recovery = error.recoverySuggestion {
-            return Text(String(format: LocalizedString("Unable to set a temporary basal rate: %1$@\n\n%2$@", comment: "Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text)"), error.localizedDescription, recovery))
+            return Text(String(format: LocalizedString("法设置临时基础率：%1$@\n\n%2$@", comment: "Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text)"), error.localizedDescription, recovery))
         } else {
-            return Text(String(format: LocalizedString("Unable to set a temporary basal rate: %1$@", comment: "Alert format string for a failure to set temporary basal. (1: error description)"), error.localizedDescription))
+            return Text(String(format: LocalizedString("无法设置临时基础利率：%1$@", comment: "Alert format string for a failure to set temporary basal. (1: error description)"), error.localizedDescription))
         }
     }
 

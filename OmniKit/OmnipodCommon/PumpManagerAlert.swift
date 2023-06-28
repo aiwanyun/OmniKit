@@ -66,7 +66,7 @@ public enum PumpManagerAlert: Hashable {
             formatter.allowedUnits = [.hour]
             formatter.unitsStyle = .full
             let timeString = formatter.string(from: TimeInterval(offset))!
-            return String(format: LocalizedString("Pod expires in %1$@.", comment: "Format string for alert content body for userPodExpiration pod alert. (1: time until expiration)"), timeString)
+            return String(format: LocalizedString("Pod 将在 %1$@ 后过期。", comment: "Format string for alert content body for userPodExpiration pod alert. (1: time until expiration)"), timeString)
         case .podExpiring:
             return LocalizedString("立即更改POD。 POD活跃了72小时。", comment: "Alert content body for podExpiring pod alert")
         case .podExpireImminent:
@@ -74,11 +74,11 @@ public enum PumpManagerAlert: Hashable {
         case .lowReservoir(_, let lowReservoirReminderValue):
             let quantityFormatter = QuantityFormatter(for: .internationalUnit())
             let valueString = quantityFormatter.string(from: HKQuantity(unit: .internationalUnit(), doubleValue: lowReservoirReminderValue)) ?? String(describing: lowReservoirReminderValue)
-            return String(format: LocalizedString("%1$@ insulin or less remaining in Pod. Change Pod soon.", comment: "Format string for alert content body for lowReservoir pod alert. (1: reminder value)"), valueString)
+            return String(format: LocalizedString("Pod 中剩余 %1$@ 胰岛素或更少。 尽快更换 Pod。", comment: "Format string for alert content body for lowReservoir pod alert. (1: reminder value)"), valueString)
         case .suspendInProgress:
             return LocalizedString("暂停提醒", comment: "Alert content body for suspendInProgress pod alert")
         case .suspendEnded:
-            return LocalizedString("The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes.", comment: "Alert content body for suspendEnded pod alert")
+            return LocalizedString("胰岛素暂停期已结束。\n\n您可以从主屏幕上的横幅或泵设置屏幕恢复输送。 15 分钟后将再次提醒您。", comment: "Alert content body for suspendEnded pod alert")
         case .finishSetupReminder:
             return LocalizedString("请完成配对您的豆荚。", comment: "Alert content body for finishSetupReminder pod alert")
         case .timeOffsetChangeDetected:

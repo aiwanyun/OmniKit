@@ -101,7 +101,7 @@ public enum PodAlert: CustomStringConvertible, RawRepresentable, Equatable {
         case .shutdownImminent:
             alertName = LocalizedString("迫在眉睫", comment: "Description for shutdown imminent")
         case .lowReservoir(let units):
-            alertName = String(format: LocalizedString("Low reservoir advisory (%1$gU)", comment: "Format string for description for low reservoir advisory (1: reminder units)"), units)
+            alertName = String(format: LocalizedString("低水库警告 (%1$gU)", comment: "Format string for description for low reservoir advisory (1: reminder units)"), units)
         case .autoOff:
             alertName = LocalizedString("自动关闭", comment: "Description for auto-off")
         case .podSuspendedReminder:

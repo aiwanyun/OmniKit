@@ -56,7 +56,7 @@ struct NotificationSettingsView: View {
 
             RoundedCard<EmptyView>(
                 title: LocalizedString("关键警报", comment: "Title for critical alerts description"),
-                footer: LocalizedString("The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode.", comment: "Description text for critical alerts")
+                footer: LocalizedString("如果您的设备处于静音或请勿打扰模式，则上述提醒不会响起。\n\n即使您的设备设置为静音或请勿打扰模式，其他重要的 Pod 警报和警报也会响起。", comment: "Description text for critical alerts")
             )
         }
         .navigationBarTitle(LocalizedString("通知设置", comment: "navigation title for notification settings"))

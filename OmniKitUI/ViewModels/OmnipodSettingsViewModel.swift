@@ -136,7 +136,7 @@ class OmnipodSettingsViewModel: ObservableObject {
             return LocalizedString("确保您的手机和吊舱彼此近。如果沟通问题持续存在，请移至新领域。", comment: "The action string on pod status page when pod data is stale")
         } else if let serviceTimeRemaining = pumpManager.podServiceTimeRemaining, serviceTimeRemaining <= Pod.serviceDuration - Pod.nominalPodLife {
             if let serviceTimeRemainingString = serviceTimeRemainingString {
-                return String(format: LocalizedString("Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.", comment: "Format string for the action string on pod status page when pod expired. (1: service time remaining)"), serviceTimeRemainingString)
+                return String(format: LocalizedString("立即更换 Pod。 胰岛素输送将在 %1$@ 后或没有剩余胰岛素时停止。", comment: "Format string for the action string on pod status page when pod expired. (1: service time remaining)"), serviceTimeRemainingString)
             } else {
                 return LocalizedString("立即更改POD。胰岛素输送将在POD过期或不再胰岛素的情况下停止8小时。", comment: "The action string on pod status page when pod expired")
             }

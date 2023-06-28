@@ -424,10 +424,10 @@ public struct FaultEventCode: CustomStringConvertible, Equatable {
             case .occluded:
                 return LocalizedString("检测到闭塞", comment: "Description for Occlusion detected pod fault")
             default:
-                return String(format: LocalizedString("Internal pod fault %1$03d", comment: "The format string for Internal pod fault (1: The fault code value)"), rawValue)
+                return String(format: LocalizedString("Pod 内部故障%1$03d", comment: "The format string for Internal pod fault (1: The fault code value)"), rawValue)
             }
         } else {
-            return String(format: LocalizedString("Unknown pod fault %1$03d", comment: "The format string for Unknown pod fault (1: The fault code value)"), rawValue)
+            return String(format: LocalizedString("未知 Pod 故障 %1$03d", comment: "The format string for Unknown pod fault (1: The fault code value)"), rawValue)
         }
     }
 }

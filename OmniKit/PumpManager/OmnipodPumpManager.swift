@@ -270,7 +270,7 @@ public class OmnipodPumpManager: RileyLinkPumpManager {
             }
             self.pumpDelegate.notify { delegate in
                 let identifier = Alert.Identifier(managerIdentifier: self.managerIdentifier, alertIdentifier: "lowRLBattery")
-                let alertBody = String(format: LocalizedString("\"%1$@\" has a low battery", comment: "Format string for low battery alert body for RileyLink. (1: device name)"), device.name ?? "unnamed")
+                let alertBody = String(format: LocalizedString("\"%1$@\" 电池电量低", comment: "Format string for low battery alert body for RileyLink. (1: device name)"), device.name ?? "unnamed")
                 let content = Alert.Content(title: LocalizedString("低分子电池", comment: "Title for RileyLink low battery alert"), body: alertBody, acknowledgeActionButtonLabel: LocalizedString("好的", comment: "Acknowledge button label for RileyLink low battery alert"))
                 delegate?.issueAlert(Alert(identifier: identifier, foregroundContent: content, backgroundContent: content, trigger: .immediate))
             }
