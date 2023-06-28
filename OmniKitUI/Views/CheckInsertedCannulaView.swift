@@ -28,11 +28,11 @@ struct CheckInsertedCannulaView: View {
                 LeadingImage("Cannula Inserted")
             
                 HStack {
-                    FrameworkLocalText("Is the cannula inserted properly?", comment: "Question to confirm the cannula is inserted properly").bold()
+                    FrameworkLocalText("套管是否正确插入？", comment: "Question to confirm the cannula is inserted properly").bold()
                     Spacer()
                 }
                 HStack {
-                    FrameworkLocalText("The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.", comment: "Description of proper cannula insertion").fixedSize(horizontal: false, vertical: true)
+                    FrameworkLocalText("将套管正确插入皮肤时，吊舱顶部的窗户应为粉红色。", comment: "Description of proper cannula insertion").fixedSize(horizontal: false, vertical: true)
                     Spacer()
                 }.padding(.vertical)
             }
@@ -42,13 +42,13 @@ struct CheckInsertedCannulaView: View {
                 Button(action: {
                     self.wasInsertedProperly()
                 }) {
-                    Text(LocalizedString("Yes", comment: "Button label for user to answer cannula was properly inserted"))
+                    Text(LocalizedString("是的", comment: "Button label for user to answer cannula was properly inserted"))
                         .actionButtonStyle(.primary)
                 }
                 Button(action: {
                     self.didRequestDeactivation()
                 }) {
-                    Text(LocalizedString("No", comment: "Button label for user to answer cannula was not properly inserted"))
+                    Text(LocalizedString("不", comment: "Button label for user to answer cannula was not properly inserted"))
                         .actionButtonStyle(.destructive)
                 }
             }.padding()
@@ -60,7 +60,7 @@ struct CheckInsertedCannulaView: View {
     }
     
     var cancelButton: some View {
-        Button(LocalizedString("Cancel", comment: "Cancel button text in navigation bar on insert cannula screen")) {
+        Button(LocalizedString("取消", comment: "Cancel button text in navigation bar on insert cannula screen")) {
             cancelModalIsPresented = true
         }
         .accessibility(identifier: "button_cancel")
@@ -68,10 +68,10 @@ struct CheckInsertedCannulaView: View {
 
     var cancelPairingModal: Alert {
         return Alert(
-            title: FrameworkLocalText("Are you sure you want to cancel Pod setup?", comment: "Alert title for cancel pairing modal"),
-            message: FrameworkLocalText("If you cancel Pod setup, the current Pod will be deactivated and will be unusable.", comment: "Alert message body for confirm pod attachment"),
-            primaryButton: .destructive(FrameworkLocalText("Yes, Deactivate Pod", comment: "Button title for confirm deactivation option"), action: { didRequestDeactivation() } ),
-            secondaryButton: .default(FrameworkLocalText("No, Continue With Pod", comment: "Continue pairing button title of in pairing cancel modal"))
+            title: FrameworkLocalText("您确定要取消POD设置吗？", comment: "Alert title for cancel pairing modal"),
+            message: FrameworkLocalText("如果取消POD设置，则当前POD将被停用，并且将无法使用。", comment: "Alert message body for confirm pod attachment"),
+            primaryButton: .destructive(FrameworkLocalText("是的，停用豆荚", comment: "Button title for confirm deactivation option"), action: { didRequestDeactivation() } ),
+            secondaryButton: .default(FrameworkLocalText("不，继续使用豆荚", comment: "Continue pairing button title of in pairing cancel modal"))
         )
     }
 

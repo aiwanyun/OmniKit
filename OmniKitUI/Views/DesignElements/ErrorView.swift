@@ -46,7 +46,7 @@ struct ErrorView: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             .accessibilityElement(children: .ignore)
-            .accessibility(label: FrameworkLocalText("Error", comment: "Accessibility label indicating an error occurred"))
+            .accessibility(label: FrameworkLocalText("错误", comment: "Accessibility label indicating an error occurred"))
             
             Text(self.error.recoverySuggestion ?? "")
                 .foregroundColor(.secondary)

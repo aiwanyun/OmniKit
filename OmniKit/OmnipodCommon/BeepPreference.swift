@@ -16,22 +16,22 @@ public enum BeepPreference: Int, CaseIterable {
     public var title: String {
         switch self {
         case .silent:
-            return LocalizedString("Disabled", comment: "Title string for BeepPreference.silent")
+            return LocalizedString("禁用", comment: "Title string for BeepPreference.silent")
         case .manualCommands:
-            return LocalizedString("Enabled", comment: "Title string for BeepPreference.manualCommands")
+            return LocalizedString("启用", comment: "Title string for BeepPreference.manualCommands")
         case .extended:
-            return LocalizedString("Extended", comment: "Title string for BeepPreference.extended")
+            return LocalizedString("扩展", comment: "Title string for BeepPreference.extended")
         }
     }
 
     public var description: String {
         switch self {
         case .silent:
-            return LocalizedString("No confidence reminders are used.", comment: "Description for BeepPreference.silent")
+            return LocalizedString("没有使用信心提醒。", comment: "Description for BeepPreference.silent")
         case .manualCommands:
-            return LocalizedString("Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used.", comment: "Description for BeepPreference.manualCommands")
+            return LocalizedString("信心提醒将听起来您发起的命令，例如推注，取消推注，暂停，简历，保存通知提醒等。当循环自动调整交付时，不使用信心提醒。", comment: "Description for BeepPreference.manualCommands")
         case .extended:
-            return LocalizedString("Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate.", comment: "Description for BeepPreference.extended")
+            return LocalizedString("当循环自动调整交付以及您发起的命令时，置信提醒将听起来。", comment: "Description for BeepPreference.extended")
         }
     }
 

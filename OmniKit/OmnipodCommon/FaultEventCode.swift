@@ -416,13 +416,13 @@ public struct FaultEventCode: CustomStringConvertible, Equatable {
         if let faultType = faultType {
             switch faultType {
             case .noFaults:
-                return LocalizedString("No faults", comment: "Description for Fault Event Code .noFaults")
+                return LocalizedString("没有故障", comment: "Description for Fault Event Code .noFaults")
             case .reservoirEmpty:
-                return LocalizedString("Empty reservoir", comment: "Description for Empty reservoir pod fault")
+                return LocalizedString("空库", comment: "Description for Empty reservoir pod fault")
             case .exceededMaximumPodLife80Hrs:
-                return LocalizedString("Pod expired", comment: "Description for Pod expired pod fault")
+                return LocalizedString("豆荚过期", comment: "Description for Pod expired pod fault")
             case .occluded:
-                return LocalizedString("Occlusion detected", comment: "Description for Occlusion detected pod fault")
+                return LocalizedString("检测到闭塞", comment: "Description for Occlusion detected pod fault")
             default:
                 return String(format: LocalizedString("Internal pod fault %1$03d", comment: "The format string for Internal pod fault (1: The fault code value)"), rawValue)
             }

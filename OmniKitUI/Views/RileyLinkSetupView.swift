@@ -39,7 +39,7 @@ struct RileyLinkSetupView: View {
                         .foregroundColor(.secondary)
                 }
                 Section(header: HStack {
-                    FrameworkLocalText("Devices", comment: "Header for devices section of RileyLinkSetupView")
+                    FrameworkLocalText("设备", comment: "Header for devices section of RileyLinkSetupView")
                     Spacer()
                     ProgressView()
                 }) {
@@ -59,10 +59,10 @@ struct RileyLinkSetupView: View {
                 .padding([.bottom, .horizontal])
 
         }
-        .navigationTitle(LocalizedString("RileyLink Setup", comment: "Navigation title for RileyLinkSetupView"))
+        .navigationTitle(LocalizedString("Rileylink设置", comment: "Navigation title for RileyLinkSetupView"))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(LocalizedString("Cancel", comment: "Cancel button title"), action: {
+                Button(LocalizedString("取消", comment: "Cancel button title"), action: {
                     cancelButtonTapped?()
                 })
             }
@@ -96,11 +96,11 @@ struct RileyLinkSetupView: View {
 
     @ViewBuilder
     private var bodyText: some View {
-        Text(LocalizedString("RileyLink allows for communication with the pump over Bluetooth", comment: "bodyText for RileyLinkSetupView"))
+        Text(LocalizedString("Rileylink可以通过蓝牙与泵进行通信", comment: "bodyText for RileyLinkSetupView"))
     }
 
     private var continueButton: some View {
-        Button(LocalizedString("Continue", comment: "Text for continue button on PodSetupView"), action: nextAction)
+        Button(LocalizedString("继续", comment: "Text for continue button on PodSetupView"), action: nextAction)
             .buttonStyle(ActionButtonStyle())
             .disabled(!dataSource.connecting)
 

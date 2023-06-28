@@ -37,30 +37,30 @@ public enum PumpManagerAlert: Hashable {
     var contentTitle: String {
         switch self {
         case .multiCommand:
-            return LocalizedString("Multiple Command Alert", comment: "Alert content title for multiCommand pod alert")
+            return LocalizedString("多重命令警报", comment: "Alert content title for multiCommand pod alert")
         case .userPodExpiration:
-            return LocalizedString("Pod Expiration Reminder", comment: "Alert content title for userPodExpiration pod alert")
+            return LocalizedString("POD到期提醒", comment: "Alert content title for userPodExpiration pod alert")
         case .podExpiring:
-            return LocalizedString("Pod Expired", comment: "Alert content title for podExpiring pod alert")
+            return LocalizedString("豆荚过期", comment: "Alert content title for podExpiring pod alert")
         case .podExpireImminent:
-            return LocalizedString("Pod Expired", comment: "Alert content title for podExpireImminent pod alert")
+            return LocalizedString("豆荚过期", comment: "Alert content title for podExpireImminent pod alert")
         case .lowReservoir:
-            return LocalizedString("Low Reservoir", comment: "Alert content title for lowReservoir pod alert")
+            return LocalizedString("低水箱", comment: "Alert content title for lowReservoir pod alert")
         case .suspendInProgress:
-            return LocalizedString("Suspend In Progress Reminder", comment: "Alert content title for suspendInProgress pod alert")
+            return LocalizedString("暂停提醒", comment: "Alert content title for suspendInProgress pod alert")
         case .suspendEnded:
-            return LocalizedString("Resume Insulin", comment: "Alert content title for suspendEnded pod alert")
+            return LocalizedString("恢复胰岛素", comment: "Alert content title for suspendEnded pod alert")
         case .finishSetupReminder:
-            return LocalizedString("Pod Pairing Incomplete", comment: "Alert content title for finishSetupReminder pod alert")
+            return LocalizedString("POD配对不完整", comment: "Alert content title for finishSetupReminder pod alert")
         case .timeOffsetChangeDetected:
-            return LocalizedString("Time Change Detected", comment: "Alert content title for timeOffsetChangeDetected pod alert")
+            return LocalizedString("时间变化检测到", comment: "Alert content title for timeOffsetChangeDetected pod alert")
         }
     }
 
     var contentBody: String {
         switch self {
         case .multiCommand:
-            return LocalizedString("Multiple Command Alert", comment: "Alert content body for multiCommand pod alert")
+            return LocalizedString("多重命令警报", comment: "Alert content body for multiCommand pod alert")
         case .userPodExpiration(_, let offset):
             let formatter = DateComponentsFormatter()
             formatter.allowedUnits = [.hour]
@@ -68,21 +68,21 @@ public enum PumpManagerAlert: Hashable {
             let timeString = formatter.string(from: TimeInterval(offset))!
             return String(format: LocalizedString("Pod expires in %1$@.", comment: "Format string for alert content body for userPodExpiration pod alert. (1: time until expiration)"), timeString)
         case .podExpiring:
-            return LocalizedString("Change Pod now. Pod has been active for 72 hours.", comment: "Alert content body for podExpiring pod alert")
+            return LocalizedString("立即更改POD。 POD活跃了72小时。", comment: "Alert content body for podExpiring pod alert")
         case .podExpireImminent:
-            return LocalizedString("Change Pod now. Insulin delivery will stop in 1 hour.", comment: "Alert content body for podExpireImminent pod alert")
+            return LocalizedString("立即更改POD。胰岛素输送将在1小时内停止。", comment: "Alert content body for podExpireImminent pod alert")
         case .lowReservoir(_, let lowReservoirReminderValue):
             let quantityFormatter = QuantityFormatter(for: .internationalUnit())
             let valueString = quantityFormatter.string(from: HKQuantity(unit: .internationalUnit(), doubleValue: lowReservoirReminderValue)) ?? String(describing: lowReservoirReminderValue)
             return String(format: LocalizedString("%1$@ insulin or less remaining in Pod. Change Pod soon.", comment: "Format string for alert content body for lowReservoir pod alert. (1: reminder value)"), valueString)
         case .suspendInProgress:
-            return LocalizedString("Suspend In Progress Reminder", comment: "Alert content body for suspendInProgress pod alert")
+            return LocalizedString("暂停提醒", comment: "Alert content body for suspendInProgress pod alert")
         case .suspendEnded:
             return LocalizedString("The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes.", comment: "Alert content body for suspendEnded pod alert")
         case .finishSetupReminder:
-            return LocalizedString("Please finish pairing your pod.", comment: "Alert content body for finishSetupReminder pod alert")
+            return LocalizedString("请完成配对您的豆荚。", comment: "Alert content body for finishSetupReminder pod alert")
         case .timeOffsetChangeDetected:
-            return LocalizedString("The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings.", comment: "Alert content body for timeOffsetChangeDetected pod alert")
+            return LocalizedString("泵上的时间与当前时间不同。您可以在设置中查看泵的时间并同步到当前时间。", comment: "Alert content body for timeOffsetChangeDetected pod alert")
         }
     }
 
@@ -118,7 +118,7 @@ public enum PumpManagerAlert: Hashable {
     var backgroundContentBody: String {
         switch self {
         case .suspendEnded:
-            return LocalizedString("Suspension time is up. Open the app and resume.", comment: "Alert notification body for suspendEnded pod alert user notification")
+            return LocalizedString("悬架时间增加了。打开应用程序并简历。", comment: "Alert notification body for suspendEnded pod alert user notification")
         default:
             return contentBody
         }
@@ -126,7 +126,7 @@ public enum PumpManagerAlert: Hashable {
 
 
     var actionButtonLabel: String {
-        return LocalizedString("Ok", comment: "Action button default text for PodAlerts")
+        return LocalizedString("好的", comment: "Action button default text for PodAlerts")
     }
 
     var foregroundContent: Alert.Content {

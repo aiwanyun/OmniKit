@@ -25,7 +25,7 @@ struct DeliveryUncertaintyRecoveryView: View {
             Text(String(format: LocalizedString("%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display.", comment: "Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name)"), self.model.appName, self.uncertaintyDateLocalizedString, self.model.appName))
                 .padding([.top, .bottom])
             Section(header: HStack {
-                FrameworkLocalText("Devices", comment: "Header for devices section of RileyLinkSetupView")
+                FrameworkLocalText("设备", comment: "Header for devices section of RileyLinkSetupView")
                 Spacer()
                 ProgressView()
             }) {
@@ -62,18 +62,18 @@ struct DeliveryUncertaintyRecoveryView: View {
             }
         }) {
             VStack {
-                Text(LocalizedString("Attemping to re-establish communication", comment: "Description string above progress indicator while attempting to re-establish communication from an unacknowledged command")).padding(.top)
+                Text(LocalizedString("准备重新建立沟通", comment: "Description string above progress indicator while attempting to re-establish communication from an unacknowledged command")).padding(.top)
                 ProgressIndicatorView(state: .indeterminantProgress)
                 Button(action: {
                     self.model.podDeactivationChosen()
                 }) {
-                    Text(LocalizedString("Deactivate Pod", comment: "Button title to deactive pod on uncertain program"))
+                    Text(LocalizedString("停用豆荚", comment: "Button title to deactive pod on uncertain program"))
                     .actionButtonStyle(.destructive)
                     .padding()
                 }
             }
         }
-        .navigationBarTitle(Text(LocalizedString("Unable to Reach Pod", comment: "Title of delivery uncertainty recovery page")), displayMode: .large)
+        .navigationBarTitle(Text(LocalizedString("无法到达豆荚", comment: "Title of delivery uncertainty recovery page")), displayMode: .large)
         .navigationBarItems(leading: backButton)
     }
     
@@ -100,7 +100,7 @@ struct DeliveryUncertaintyRecoveryView: View {
     }
     
     private var backButton: some View {
-        Button(LocalizedString("Back", comment: "Back button text on DeliveryUncertaintyRecoveryView"), action: {
+        Button(LocalizedString("后退", comment: "Back button text on DeliveryUncertaintyRecoveryView"), action: {
             self.model.onDismiss?()
         })
     }

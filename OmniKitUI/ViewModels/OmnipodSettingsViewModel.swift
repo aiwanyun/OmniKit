@@ -131,14 +131,14 @@ class OmnipodSettingsViewModel: ObservableObject {
 
     var recoveryText: String? {
         if case .fault = podCommState {
-            return LocalizedString("Insulin delivery stopped. Change Pod now.", comment: "The action string on pod status page when pod faulted")
+            return LocalizedString("胰岛素输送停止。立即更改POD。", comment: "The action string on pod status page when pod faulted")
         } else if podOk && isPodDataStale {
-            return LocalizedString("Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.", comment: "The action string on pod status page when pod data is stale")
+            return LocalizedString("确保您的手机和吊舱彼此近。如果沟通问题持续存在，请移至新领域。", comment: "The action string on pod status page when pod data is stale")
         } else if let serviceTimeRemaining = pumpManager.podServiceTimeRemaining, serviceTimeRemaining <= Pod.serviceDuration - Pod.nominalPodLife {
             if let serviceTimeRemainingString = serviceTimeRemainingString {
                 return String(format: LocalizedString("Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.", comment: "Format string for the action string on pod status page when pod expired. (1: service time remaining)"), serviceTimeRemainingString)
             } else {
-                return LocalizedString("Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains.", comment: "The action string on pod status page when pod expired")
+                return LocalizedString("立即更改POD。胰岛素输送将在POD过期或不再胰岛素的情况下停止8小时。", comment: "The action string on pod status page when pod expired")
             }
         } else {
             return nil
@@ -148,8 +148,8 @@ class OmnipodSettingsViewModel: ObservableObject {
     var notice: OmnipodSettingsNotice? {
         if pumpManager.isClockOffset {
             return OmnipodSettingsNotice(
-                title: LocalizedString("Time Change Detected", comment: "title for time change detected notice"),
-                description: LocalizedString("The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.", comment: "description for time change detected notice"))
+                title: LocalizedString("时间变化检测到", comment: "title for time change detected notice"),
+                description: LocalizedString("泵上的时间与当前时间不同。您的泵的时间控制您的预定治疗设置。向下滚动以泵送时间行以查看时间差并配置泵。", comment: "description for time change detected notice"))
         } else {
             return nil
         }
@@ -372,17 +372,17 @@ class OmnipodSettingsViewModel: ObservableObject {
         case .fault(let status):
             switch status.faultEventCode.faultType {
             case .reservoirEmpty:
-                return LocalizedString("No Insulin", comment: "Error message for reservoir view when reservoir empty")
+                return LocalizedString("没有胰岛素", comment: "Error message for reservoir view when reservoir empty")
             case .exceededMaximumPodLife80Hrs:
-                return LocalizedString("Pod Expired", comment: "Error message for reservoir view when pod expired")
+                return LocalizedString("豆荚过期", comment: "Error message for reservoir view when pod expired")
             case .occluded, .occlusionCheckStartup1, .occlusionCheckStartup2, .occlusionCheckTimeouts1, .occlusionCheckTimeouts2, .occlusionCheckTimeouts3, .occlusionCheckPulseIssue, .occlusionCheckBolusProblem, .occlusionCheckAboveThreshold, .occlusionCheckValueTooHigh:
-                return LocalizedString("Pod Occlusion", comment: "Error message for reservoir view when pod occlusion checks failed")
+                return LocalizedString("POD闭塞", comment: "Error message for reservoir view when pod occlusion checks failed")
             default:
-                return LocalizedString("Pod Error", comment: "Error message for reservoir view during general pod fault")
+                return LocalizedString("POD错误", comment: "Error message for reservoir view during general pod fault")
             }
         case .active:
             if isPodDataStale {
-                return LocalizedString("Signal Loss", comment: "Error message for reservoir view during general pod fault")
+                return LocalizedString("信号损失", comment: "Error message for reservoir view during general pod fault")
             } else {
                 return nil
             }
@@ -407,7 +407,7 @@ class OmnipodSettingsViewModel: ObservableObject {
     }
 
     var suspendResumeActionText: String {
-        let defaultText = LocalizedString("Suspend Insulin Delivery", comment: "Text for suspend resume button when insulin delivery active")
+        let defaultText = LocalizedString("暂停胰岛素输送", comment: "Text for suspend resume button when insulin delivery active")
 
         guard podOk else {
             return defaultText
@@ -415,11 +415,11 @@ class OmnipodSettingsViewModel: ObservableObject {
 
         switch basalDeliveryState {
         case .suspending:
-            return LocalizedString("Suspending insulin delivery...", comment: "Text for suspend resume button when insulin delivery is suspending")
+            return LocalizedString("暂停胰岛素输送...", comment: "Text for suspend resume button when insulin delivery is suspending")
         case .suspended:
-            return LocalizedString("Resume Insulin Delivery", comment: "Text for suspend resume button when insulin delivery is suspended")
+            return LocalizedString("恢复胰岛素输送", comment: "Text for suspend resume button when insulin delivery is suspended")
         case .resuming:
-            return LocalizedString("Resuming insulin delivery...", comment: "Text for suspend resume button when insulin delivery is resuming")
+            return LocalizedString("恢复胰岛素输送...", comment: "Text for suspend resume button when insulin delivery is resuming")
         default:
             return defaultText
         }

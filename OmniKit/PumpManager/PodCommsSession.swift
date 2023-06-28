@@ -44,33 +44,33 @@ extension PodCommsError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .noPodPaired:
-            return LocalizedString("No pod paired", comment: "Error message shown when no pod is paired")
+            return LocalizedString("没有吊舱配对", comment: "Error message shown when no pod is paired")
         case .invalidData:
             return nil
         case .noResponse:
-            return LocalizedString("No response from pod", comment: "Error message shown when no response from pod was received")
+            return LocalizedString("没有POD的响应", comment: "Error message shown when no response from pod was received")
         case .emptyResponse:
-            return LocalizedString("Empty response from pod", comment: "Error message shown when empty response from pod was received")
+            return LocalizedString("POD的空响应", comment: "Error message shown when empty response from pod was received")
         case .podAckedInsteadOfReturningResponse:
-            return LocalizedString("Pod sent ack instead of response", comment: "Error message shown when pod sends ack instead of response")
+            return LocalizedString("POD发送了ACK而不是响应", comment: "Error message shown when pod sends ack instead of response")
         case .unexpectedPacketType:
             return nil
         case .unexpectedResponse:
-            return LocalizedString("Unexpected response from pod", comment: "Error message shown when empty response from pod was received")
+            return LocalizedString("POD的意外响应", comment: "Error message shown when empty response from pod was received")
         case .unknownResponseType:
             return nil
         case .invalidAddress(address: let address, expectedAddress: let expectedAddress):
             return String(format: LocalizedString("Invalid address 0x%x. Expected 0x%x", comment: "Error message for when unexpected address is received (1: received address) (2: expected address)"), address, expectedAddress)
         case .noRileyLinkAvailable:
-            return LocalizedString("No RileyLink available", comment: "Error message shown when no response from pod was received")
+            return LocalizedString("没有Rileylink可用", comment: "Error message shown when no response from pod was received")
         case .unfinalizedBolus:
-            return LocalizedString("Bolus in progress", comment: "Error message shown when operation could not be completed due to existing bolus in progress")
+            return LocalizedString("推注正在进行", comment: "Error message shown when operation could not be completed due to existing bolus in progress")
         case .unfinalizedTempBasal:
-            return LocalizedString("Temp basal in progress", comment: "Error message shown when temp basal could not be set due to existing temp basal in progress")
+            return LocalizedString("临时临时", comment: "Error message shown when temp basal could not be set due to existing temp basal in progress")
         case .nonceResyncFailed:
             return nil
         case .podSuspended:
-            return LocalizedString("Pod is suspended", comment: "Error message action could not be performed because pod is suspended")
+            return LocalizedString("吊舱被悬挂", comment: "Error message action could not be performed because pod is suspended")
         case .podFault(let fault):
             let faultDescription = String(describing: fault.faultEventCode)
             return String(format: LocalizedString("Pod Fault: %1$@", comment: "Format string for pod fault code"), faultDescription)
@@ -79,25 +79,25 @@ extension PodCommsError: LocalizedError {
         case .unacknowledgedMessage(_, let error):
             return error.localizedDescription
         case .unacknowledgedCommandPending:
-            return LocalizedString("Communication issue: Unacknowledged command pending.", comment: "Error message when command is rejected because an unacknowledged command is pending.")
+            return LocalizedString("通信问题：未经认可的命令未决。", comment: "Error message when command is rejected because an unacknowledged command is pending.")
         case .rejectedMessage(let errorCode):
             return String(format: LocalizedString("Command error %1$u", comment: "Format string for invalid message error code (1: error code number)"), errorCode)
         case .podChange:
-            return LocalizedString("Unexpected pod change", comment: "Format string for unexpected pod change")
+            return LocalizedString("意外的POD更改", comment: "Format string for unexpected pod change")
         case .activationTimeExceeded:
-            return LocalizedString("Activation time exceeded", comment: "Format string for activation time exceeded")
+            return LocalizedString("激活时间超出了", comment: "Format string for activation time exceeded")
         case .rssiTooLow: // occurs when pod is too far for reliable pairing, but can sometimes occur at other distances & positions
-            return LocalizedString("Poor signal strength", comment: "Format string for poor pod signal strength")
+            return LocalizedString("信号强度差", comment: "Format string for poor pod signal strength")
         case .rssiTooHigh: // only occurs when pod is too close for reliable pairing
-            return LocalizedString("Signal strength too high", comment: "Format string for pod signal strength too high")
+            return LocalizedString("信号强度太高", comment: "Format string for pod signal strength too high")
         case .diagnosticMessage(let str):
             return str
         case .podIncompatible(let str):
             return str
         case .noPodsFound:
-            return LocalizedString("No pods found", comment: "Error message for PodCommsError.noPodsFound")
+            return LocalizedString("找不到豆荚", comment: "Error message for PodCommsError.noPodsFound")
         case .tooManyPodsFound:
-            return LocalizedString("Too many pods found", comment: "Error message for PodCommsError.tooManyPodsFound")
+            return LocalizedString("发现了太多的豆荚", comment: "Error message for PodCommsError.tooManyPodsFound")
 
         }
     }
@@ -113,11 +113,11 @@ extension PodCommsError: LocalizedError {
         case .invalidData:
             return nil
         case .noResponse:
-            return LocalizedString("Please try repositioning the pod or the RileyLink and try again", comment: "Recovery suggestion when no response is received from pod")
+            return LocalizedString("请尝试重新定位豆荚或rileylink，然后重试", comment: "Recovery suggestion when no response is received from pod")
         case .emptyResponse:
             return nil
         case .podAckedInsteadOfReturningResponse:
-            return LocalizedString("Try again", comment: "Recovery suggestion when ack received instead of response")
+            return LocalizedString("再试一次", comment: "Recovery suggestion when ack received instead of response")
         case .unexpectedPacketType:
             return nil
         case .unexpectedResponse:
@@ -125,17 +125,17 @@ extension PodCommsError: LocalizedError {
         case .unknownResponseType:
             return nil
         case .invalidAddress:
-            return LocalizedString("Crosstalk possible. Please move to a new location", comment: "Recovery suggestion when unexpected address received")
+            return LocalizedString("串扰可能。请搬到新的位置", comment: "Recovery suggestion when unexpected address received")
         case .noRileyLinkAvailable:
-            return LocalizedString("Make sure your RileyLink is nearby and powered on", comment: "Recovery suggestion when no RileyLink is available")
+            return LocalizedString("确保您的Rileylink在附近并加油", comment: "Recovery suggestion when no RileyLink is available")
         case .unfinalizedBolus:
-            return LocalizedString("Wait for existing bolus to finish, or cancel bolus", comment: "Recovery suggestion when operation could not be completed due to existing bolus in progress")
+            return LocalizedString("等待现有的推注完成或取消推注", comment: "Recovery suggestion when operation could not be completed due to existing bolus in progress")
         case .unfinalizedTempBasal:
-            return LocalizedString("Wait for existing temp basal to finish, or suspend to cancel", comment: "Recovery suggestion when operation could not be completed due to existing temp basal in progress")
+            return LocalizedString("等待现有的临时温度基础完成，或暂停取消", comment: "Recovery suggestion when operation could not be completed due to existing temp basal in progress")
         case .nonceResyncFailed:
             return nil
         case .podSuspended:
-            return LocalizedString("Resume delivery", comment: "Recovery suggestion when pod is suspended")
+            return LocalizedString("恢复交付", comment: "Recovery suggestion when pod is suspended")
         case .podFault:
             return nil
         case .commsError:
@@ -147,21 +147,21 @@ extension PodCommsError: LocalizedError {
         case .rejectedMessage:
             return nil
         case .podChange:
-            return LocalizedString("Please bring only original pod in range or deactivate original pod", comment: "Recovery suggestion on unexpected pod change")
+            return LocalizedString("请仅带有范围内的原始豆荚或停用原始豆荚", comment: "Recovery suggestion on unexpected pod change")
         case .activationTimeExceeded:
             return nil
         case .rssiTooLow:
-            return LocalizedString("Please reposition the RileyLink relative to the pod", comment: "Recovery suggestion when pairing signal strength is too low")
+            return LocalizedString("请重新定位Rileylink相对于POD", comment: "Recovery suggestion when pairing signal strength is too low")
         case .rssiTooHigh:
-            return LocalizedString("Please reposition the RileyLink further from the pod", comment: "Recovery suggestion when pairing signal strength is too high")
+            return LocalizedString("请重新定位豆荚更远的Rileylink", comment: "Recovery suggestion when pairing signal strength is too high")
         case .diagnosticMessage:
             return nil
         case .podIncompatible:
             return nil
         case .noPodsFound:
-            return LocalizedString("Make sure your pod is filled and nearby.", comment: "Recovery suggestion for PodCommsError.noPodsFound")
+            return LocalizedString("确保您的吊舱已填满并附近。", comment: "Recovery suggestion for PodCommsError.noPodsFound")
         case .tooManyPodsFound:
-            return LocalizedString("Move to a new area away from any other pods and try again.", comment: "Recovery suggestion for PodCommsError.tooManyPodsFound")
+            return LocalizedString("移至远离任何其他豆荚的新区域，然后重试。", comment: "Recovery suggestion for PodCommsError.tooManyPodsFound")
         }
     }
 

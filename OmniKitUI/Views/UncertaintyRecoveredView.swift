@@ -24,13 +24,13 @@ struct UncertaintyRecoveredView: View {
                 Button(action: {
                     self.didFinish?()
                 }) {
-                    Text(LocalizedString("Continue", comment: "Button title to continue"))
+                    Text(LocalizedString("继续", comment: "Button title to continue"))
                     .actionButtonStyle()
                     .padding()
                 }
             }
         }
-        .navigationBarTitle(Text("Comms Recovered"), displayMode: .large)
+        .navigationBarTitle(Text("通讯恢复了"), displayMode: .large)
         .navigationBarBackButtonHidden(true)
     }    
 }

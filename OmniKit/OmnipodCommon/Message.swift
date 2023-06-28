@@ -22,11 +22,11 @@ extension MessageError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .notEnoughData:
-            return LocalizedString("Not enough data", comment: "Description for MessageError notEnoughData")
+            return LocalizedString("数据不足", comment: "Description for MessageError notEnoughData")
         case .invalidCrc:
-            return LocalizedString("Invalid CRC", comment: "Description for MessageError invalidCrc")
+            return LocalizedString("无效的CRC", comment: "Description for MessageError invalidCrc")
         case .invalidSequence:
-            return LocalizedString("Unexpected message sequence number", comment: "Description for MessageError invalidSequence")
+            return LocalizedString("意外消息序列编号", comment: "Description for MessageError invalidSequence")
         case .invalidAddress(address: let address):
             return String(format: LocalizedString("Invalid address: (%1$@)", comment: "Description for MessageError invalidAddress"), String(format: "%08x", address))
         case .parsingError(let offset, let data, let error):

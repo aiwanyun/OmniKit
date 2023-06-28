@@ -30,7 +30,7 @@ struct ExpirationReminderPickerView: View {
     var body: some View {
         VStack {
             HStack {
-                Text(LocalizedString("Expiration Reminder Default", comment: "Label text for expiration reminder default row"))
+                Text(LocalizedString("到期提醒默认", comment: "Label text for expiration reminder default row"))
                 Spacer()
                 if collapsible {
                     Button(expirationDefaultString) {
@@ -54,7 +54,7 @@ struct ExpirationReminderPickerView: View {
         if value > 0 {
             return expirationDefaultFormatter.string(from: HKQuantity(unit: .hour(), doubleValue: Double(value)))!
         } else {
-            return LocalizedString("No Reminder", comment: "Value text for no expiration reminder")
+            return LocalizedString("没有提醒", comment: "Value text for no expiration reminder")
         }
     }
 }

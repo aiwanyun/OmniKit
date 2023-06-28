@@ -30,15 +30,15 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
         var actionButtonAccessibilityLabel: String {
             switch self {
             case .ready, .startingInsertion:
-                return LocalizedString("Insert Cannula", comment: "Insert cannula action button accessibility label while ready to pair")
+                return LocalizedString("插入套管", comment: "Insert cannula action button accessibility label while ready to pair")
             case .inserting:
-                return LocalizedString("Inserting. Please wait.", comment: "Insert cannula action button accessibility label while pairing")
+                return LocalizedString("插入。请稍等。", comment: "Insert cannula action button accessibility label while pairing")
             case .checkingInsertion:
-                return LocalizedString("Checking Insertion", comment: "Insert cannula action button accessibility label checking insertion")
+                return LocalizedString("检查插入", comment: "Insert cannula action button accessibility label checking insertion")
             case .error(let error):
                 return String(format: "%@ %@", error.errorDescription ?? "", error.recoverySuggestion ?? "")
             case .finished:
-                return LocalizedString("Cannula inserted successfully. Continue.", comment: "Insert cannula action button accessibility label when cannula insertion succeeded")
+                return LocalizedString("插管成功插入。继续。", comment: "Insert cannula action button accessibility label when cannula insertion succeeded")
             }
         }
 
@@ -54,15 +54,15 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
         var nextActionButtonDescription: String {
             switch self {
             case .ready:
-                return LocalizedString("Insert Cannula", comment: "Cannula insertion button text while ready to insert")
+                return LocalizedString("插入套管", comment: "Cannula insertion button text while ready to insert")
             case .error:
-                return LocalizedString("Retry", comment: "Cannula insertion button text while showing error")
+                return LocalizedString("重试", comment: "Cannula insertion button text while showing error")
             case .inserting, .startingInsertion:
-                return LocalizedString("Inserting...", comment: "Cannula insertion button text while inserting")
+                return LocalizedString("插入...", comment: "Cannula insertion button text while inserting")
             case .checkingInsertion:
-                return LocalizedString("Checking...", comment: "Cannula insertion button text while checking insertion")
+                return LocalizedString("检查...", comment: "Cannula insertion button text while checking insertion")
             case .finished:
-                return LocalizedString("Continue", comment: "Cannula insertion button text when inserted")
+                return LocalizedString("继续", comment: "Cannula insertion button text when inserted")
             }
         }
         

@@ -20,9 +20,9 @@ class PairPodViewModel: ObservableObject, Identifiable {
         var text: String {
             switch self {
             case .cancel:
-                return LocalizedString("Cancel", comment: "Pairing interface navigation bar button text for cancel action")
+                return LocalizedString("取消", comment: "Pairing interface navigation bar button text for cancel action")
             case .discard:
-                return LocalizedString("Discard Pod", comment: "Pairing interface navigation bar button text for discard pod action")
+                return LocalizedString("丢弃豆荚", comment: "Pairing interface navigation bar button text for discard pod action")
             }
         }
 
@@ -57,30 +57,30 @@ class PairPodViewModel: ObservableObject, Identifiable {
         var actionButtonAccessibilityLabel: String {
             switch self {
             case .ready:
-                return LocalizedString("Pair pod.", comment: "Pairing action button accessibility label while ready to pair")
+                return LocalizedString("配对豆荚。", comment: "Pairing action button accessibility label while ready to pair")
             case .pairing:
-                return LocalizedString("Pairing.", comment: "Pairing action button accessibility label while pairing")
+                return LocalizedString("配对。", comment: "Pairing action button accessibility label while pairing")
             case .priming:
-                return LocalizedString("Priming. Please wait.", comment: "Pairing action button accessibility label while priming")
+                return LocalizedString("启动。请稍等。", comment: "Pairing action button accessibility label while priming")
             case .error(let error):
                 return String(format: "%@ %@", error.errorDescription ?? "", error.recoverySuggestion ?? "")
             case .finished:
-                return LocalizedString("Pod paired successfully. Continue.", comment: "Pairing action button accessibility label when pairing succeeded")
+                return LocalizedString("POD成功配对。继续。", comment: "Pairing action button accessibility label when pairing succeeded")
             }
         }
                 
         var nextActionButtonDescription: String {
             switch self {
             case .ready:
-                return LocalizedString("Pair Pod", comment: "Pod pairing action button text while ready to pair")
+                return LocalizedString("配对豆荚", comment: "Pod pairing action button text while ready to pair")
             case .error:
-                return LocalizedString("Retry", comment: "Pod pairing action button text while showing error")
+                return LocalizedString("重试", comment: "Pod pairing action button text while showing error")
             case .pairing:
-                return LocalizedString("Pairing...", comment: "Pod pairing action button text while pairing")
+                return LocalizedString("配对...", comment: "Pod pairing action button text while pairing")
             case .priming:
-                return LocalizedString("Priming...", comment: "Pod pairing action button text while priming")
+                return LocalizedString("启动...", comment: "Pod pairing action button text while priming")
             case .finished:
-                return LocalizedString("Continue", comment: "Pod pairing action button text when paired")
+                return LocalizedString("继续", comment: "Pod pairing action button text when paired")
             }
         }
         

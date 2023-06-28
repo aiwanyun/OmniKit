@@ -70,34 +70,34 @@ struct PodDetailsView: View {
         if let delivery = podDetails.totalDelivery {
             return String(format: LocalizedString("%g U", comment: "Format string for total delivery on pod details screen"), delivery)
         } else {
-            return LocalizedString("NA", comment: "String shown on pod details for total delivery when not available.")
+            return LocalizedString("na", comment: "String shown on pod details for total delivery when not available.")
         }
     }
 
     func activeTimeText(_ duration: TimeInterval) -> String {
-        return activeTimeFormatter.string(from: duration) ?? LocalizedString("NA", comment: "String shown on pod details for active time when conversion fails.")
+        return activeTimeFormatter.string(from: duration) ?? LocalizedString("na", comment: "String shown on pod details for active time when conversion fails.")
     }
     
     var lastStatusText: String {
         if let lastStatus = podDetails.lastStatus, let ageString = statusAgeFormatter.string(from: Date().timeIntervalSince(lastStatus)) {
             return String(format: LocalizedString("%@ ago", comment: "Format string for last status date on pod details screen"), ageString)
         } else {
-            return LocalizedString("NA", comment: "String shown on pod details for last status date when not available.")
+            return LocalizedString("na", comment: "String shown on pod details for last status date when not available.")
         }
     }
     
     var body: some View {
         List {
-            row(LocalizedString("Lot Number", comment: "description label for lot number pod details row"), value: String(describing: podDetails.lotNumber))
-            row(LocalizedString("Sequence Number", comment: "description label for sequence number pod details row"), value: String(describing: podDetails.sequenceNumber))
-            row(LocalizedString("PI Version", comment: "description label for pi version pod details row"), value: podDetails.piVersion)
-            row(LocalizedString("PM Version", comment: "description label for ble firmware version pod details row"), value: podDetails.pmVersion)
-            row(LocalizedString("Total Delivery", comment: "description label for total delivery pod details row"), value: totalDeliveryText)
+            row(LocalizedString("批号", comment: "description label for lot number pod details row"), value: String(describing: podDetails.lotNumber))
+            row(LocalizedString("序列号", comment: "description label for sequence number pod details row"), value: String(describing: podDetails.sequenceNumber))
+            row(LocalizedString("PI版本", comment: "description label for pi version pod details row"), value: podDetails.piVersion)
+            row(LocalizedString("PM版本", comment: "description label for ble firmware version pod details row"), value: podDetails.pmVersion)
+            row(LocalizedString("总交货", comment: "description label for total delivery pod details row"), value: totalDeliveryText)
             if let activeTime = podDetails.activeTime, let activatedAt = podDetails.activatedAt {
-                row(LocalizedString("Pod Activated", comment: "description label for activated at time pod details row"), value: dateFormatter.string(from: activatedAt))
-                row(LocalizedString("Active Time", comment: "description label for active time pod details row"), value: activeTimeText(activeTime))
+                row(LocalizedString("POD激活", comment: "description label for activated at time pod details row"), value: dateFormatter.string(from: activatedAt))
+                row(LocalizedString("活跃时间", comment: "description label for active time pod details row"), value: activeTimeText(activeTime))
             } else {
-                row(LocalizedString("Last Status", comment: "description label for last status date pod details row"), value: lastStatusText)
+                row(LocalizedString("最后状态", comment: "description label for last status date pod details row"), value: lastStatusText)
             }
             if let fault = podDetails.fault, let pdmRef = podDetails.pdmRef {
                 Section {
@@ -105,13 +105,13 @@ struct PodDetailsView: View {
                         HStack {
                             Image(systemName: "exclamationmark.triangle.fill")
                                 .foregroundColor(guidanceColors.critical)
-                            Text(LocalizedString("Pod Fault Details", comment: "description label for pod fault details"))
+                            Text(LocalizedString("POD故障细节", comment: "description label for pod fault details"))
                                 .fontWeight(.semibold)
                         }.padding(.vertical, 4)
                         Text(String(describing: fault))
                             .fixedSize(horizontal: false, vertical: true)
                             .foregroundColor(.secondary)
-                        Text("Ref: " + pdmRef)
+                        Text("参考：" + pdmRef)
                             .fixedSize(horizontal: false, vertical: true)
                             .foregroundColor(.secondary)
                     }

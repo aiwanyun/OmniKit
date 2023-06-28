@@ -33,37 +33,37 @@ public enum PodProgressStatus: UInt8, CustomStringConvertible, Equatable {
     public var description: String {
         switch self {
         case .initialized:
-            return LocalizedString("Initialized", comment: "Pod initialized")
+            return LocalizedString("初始化", comment: "Pod initialized")
         case .memoryInitialized:
-            return LocalizedString("Memory initialized", comment: "Pod memory initialized")
+            return LocalizedString("记忆初始化", comment: "Pod memory initialized")
         case .reminderInitialized:
-            return LocalizedString("Reminder initialized", comment: "Pod pairing reminder initialized")
+            return LocalizedString("提醒初始化", comment: "Pod pairing reminder initialized")
         case .pairingCompleted:
-            return LocalizedString("Pairing completed", comment: "Pod status when pairing completed")
+            return LocalizedString("配对完成", comment: "Pod status when pairing completed")
         case .priming:
-            return LocalizedString("Priming", comment: "Pod status when priming")
+            return LocalizedString("启动", comment: "Pod status when priming")
         case .primingCompleted:
-            return LocalizedString("Priming completed", comment: "Pod state when priming completed")
+            return LocalizedString("启动完成", comment: "Pod state when priming completed")
         case .basalInitialized:
-            return LocalizedString("Basal initialized", comment: "Pod state when basal initialized")
+            return LocalizedString("基础初始化", comment: "Pod state when basal initialized")
         case .insertingCannula:
-            return LocalizedString("Inserting cannula", comment: "Pod state when inserting cannula")
+            return LocalizedString("插入套管", comment: "Pod state when inserting cannula")
         case .aboveFiftyUnits:
-            return LocalizedString("Normal", comment: "Pod state when running above fifty units")
+            return LocalizedString("普通的", comment: "Pod state when running above fifty units")
         case .fiftyOrLessUnits:
-            return LocalizedString("Low reservoir", comment: "Pod state when running with fifty or less units")
+            return LocalizedString("低水箱", comment: "Pod state when running with fifty or less units")
         case .oneNotUsed:
-            return LocalizedString("oneNotUsed", comment: "Pod state oneNotUsed")
+            return LocalizedString("牛肉", comment: "Pod state oneNotUsed")
         case .twoNotUsed:
-            return LocalizedString("twoNotUsed", comment: "Pod state twoNotUsed")
+            return LocalizedString("双胞胎", comment: "Pod state twoNotUsed")
         case .threeNotUsed:
-            return LocalizedString("threeNotUsed", comment: "Pod state threeNotUsed")
+            return LocalizedString("三局", comment: "Pod state threeNotUsed")
         case .faultEventOccurred:
-            return LocalizedString("Fault event occurred", comment: "Pod state when fault event has occurred")
+            return LocalizedString("发生故障事件", comment: "Pod state when fault event has occurred")
         case .activationTimeExceeded:
-            return LocalizedString("Activation time exceeded", comment: "Pod state when activation not completed in the time allowed")
+            return LocalizedString("激活时间超出了", comment: "Pod state when activation not completed in the time allowed")
         case .inactive:
-            return LocalizedString("Deactivated", comment: "Pod state when deactivated")
+            return LocalizedString("停用", comment: "Pod state when deactivated")
         }
     }
 }

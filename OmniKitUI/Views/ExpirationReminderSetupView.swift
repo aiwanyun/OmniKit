@@ -32,17 +32,17 @@ struct ExpirationReminderSetupView: View {
                 Button(action: {
                     continueButtonTapped?()
                 }) {
-                    Text(LocalizedString("Next", comment: "Text of continue button on ExpirationReminderSetupView"))
+                    Text(LocalizedString("下一个", comment: "Text of continue button on ExpirationReminderSetupView"))
                         .actionButtonStyle(.primary)
                 }
             }
             .padding()
         }
-        .navigationBarTitle(LocalizedString("Expiration Reminder", comment: "Title for ExpirationReminderSetupView"), displayMode: .automatic)
+        .navigationBarTitle(LocalizedString("到期提醒", comment: "Title for ExpirationReminderSetupView"), displayMode: .automatic)
         .navigationBarHidden(false)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(LocalizedString("Cancel", comment: "Cancel button title"), action: {
+                Button(LocalizedString("取消", comment: "Cancel button title"), action: {
                     cancelButtonTapped?()
                 })
             }

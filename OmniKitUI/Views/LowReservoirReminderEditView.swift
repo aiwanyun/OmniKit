@@ -42,13 +42,13 @@ struct LowReservoirReminderEditView: View {
     
     var content: some View {
         VStack {
-            RoundedCardScrollView(title: LocalizedString("Low Reservoir Reminder", comment: "Title for low reservoir reminder edit page")) {
+            RoundedCardScrollView(title: LocalizedString("低储层提醒", comment: "Title for low reservoir reminder edit page")) {
                 if self.horizontalSizeClass == .compact {
                     // Keep picker outside of card in compact view, because it forces full device width.
                     VStack(spacing: 0) {
                         RoundedCard {
                             RoundedCardValueRow(
-                                label: LocalizedString("Low Reservoir Reminder", comment: "Label for low reservoir reminder row"),
+                                label: LocalizedString("低储层提醒", comment: "Label for low reservoir reminder row"),
                                 value: formatValue(selectedValue),
                                 highlightValue: true
                             )
@@ -59,7 +59,7 @@ struct LowReservoirReminderEditView: View {
                 } else {
                     RoundedCard {
                         RoundedCardValueRow(
-                            label: LocalizedString("Low Reservoir Reminder", comment: "Label for low reservoir reminder row"),
+                            label: LocalizedString("低储层提醒", comment: "Label for low reservoir reminder row"),
                             value: formatValue(selectedValue),
                             highlightValue: true
                         )
@@ -94,9 +94,9 @@ struct LowReservoirReminderEditView: View {
     
     var saveButtonText: String {
         if saving {
-            return LocalizedString("Saving...", comment: "button title for saving low reservoir reminder while saving")
+            return LocalizedString("保存...", comment: "button title for saving low reservoir reminder while saving")
         } else {
-            return LocalizedString("Save", comment: "button title for saving low reservoir reminder")
+            return LocalizedString("节省", comment: "button title for saving low reservoir reminder")
         }
     }
     
@@ -133,12 +133,12 @@ struct LowReservoirReminderEditView: View {
     }
     
     private var cancelButton: some View {
-        Button(action: { self.onFinish?() } ) { Text(LocalizedString("Cancel", comment: "Button title for cancelling low reservoir reminder edit")) }
+        Button(action: { self.onFinish?() } ) { Text(LocalizedString("取消", comment: "Button title for cancelling low reservoir reminder edit")) }
     }
     
     private func alert(error: Error?) -> SwiftUI.Alert {
         return SwiftUI.Alert(
-            title: Text(LocalizedString("Failed to Update Low Reservoir Reminder", comment: "Alert title for error when updating low reservoir reminder")),
+            title: Text(LocalizedString("无法更新低储层提醒", comment: "Alert title for error when updating low reservoir reminder")),
             message: Text(error?.localizedDescription ?? "No Error")
         )
     }

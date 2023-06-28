@@ -40,7 +40,7 @@ struct DeactivatePodView: View {
                             VStack {
                                 ProgressIndicatorView(state: viewModel.state.progressState)
                                 if self.viewModel.state.isFinished {
-                                    FrameworkLocalText("Deactivated", comment: "Label text showing pod is deactivated")
+                                    FrameworkLocalText("停用", comment: "Label text showing pod is deactivated")
                                         .bold()
                                         .padding(.top)
                                 }
@@ -59,7 +59,7 @@ struct DeactivatePodView: View {
                             viewModel.discardPod()
                         }
                     }) {
-                        FrameworkLocalText("Discard Pod", comment: "Text for discard pod button")
+                        FrameworkLocalText("丢弃豆荚", comment: "Text for discard pod button")
                             .accessibility(identifier: "button_discard_pod_action")
                             .actionButtonStyle(.destructive)
                     }
@@ -88,10 +88,10 @@ struct DeactivatePodView: View {
     
     var removePodModal: Alert {
         return Alert(
-            title: FrameworkLocalText("Remove Pod from Body", comment: "Title for remove pod modal"),
+            title: FrameworkLocalText("从身体上取下豆荚", comment: "Title for remove pod modal"),
             message: FrameworkLocalText("Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“", comment: "Alert message body for confirm pod attachment"),
             primaryButton: .cancel(),
-            secondaryButton: .default(FrameworkLocalText("Continue", comment: "Title of button to continue discard"), action: { viewModel.discardPod() })
+            secondaryButton: .default(FrameworkLocalText("继续", comment: "Title of button to continue discard"), action: { viewModel.discardPod() })
         )
     }
 }

@@ -70,7 +70,7 @@ struct PodSetupView: View {
 
     @ViewBuilder
     private var title: some View {
-        Text(LocalizedString("Pod Setup", comment: "Title for PodSetupView"))
+        Text(LocalizedString("POD设置", comment: "Title for PodSetupView"))
             .font(.largeTitle)
             .bold()
             .padding(.vertical)
@@ -78,25 +78,25 @@ struct PodSetupView: View {
     
     @ViewBuilder
     private var bodyText: some View {
-        Text(LocalizedString("You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.", comment: "bodyText for PodSetupView"))
+        Text(LocalizedString("现在，您将开始配置提醒的过程，用胰岛素填充POD，与设备配对并将其放在身体上。", comment: "bodyText for PodSetupView"))
     }
     
     private var cancelButton: some View {
-        Button(LocalizedString("Cancel", comment: "Cancel button title"), action: {
+        Button(LocalizedString("取消", comment: "Cancel button title"), action: {
             self.dismiss()
         })
     }
 
     private var continueButton: some View {
-        Button(LocalizedString("Continue", comment: "Text for continue button on PodSetupView"), action: nextAction)
+        Button(LocalizedString("继续", comment: "Text for continue button on PodSetupView"), action: nextAction)
             .buttonStyle(ActionButtonStyle())
     }
     
     private var skipOnboardingAlert: Alert {
-        Alert(title: Text("Skip Omnipod Onboarding?"),
-              message: Text("Are you sure you want to skip Omnipod Onboarding?"),
+        Alert(title: Text("跳过omnipod？"),
+              message: Text("您确定要跳过Omnipod登机吗？"),
               primaryButton: .cancel(),
-              secondaryButton: .destructive(Text("Yes"), action: skipOnboarding))
+              secondaryButton: .destructive(Text("是的"), action: skipOnboarding))
     }
     
     private func didLongPressOnTitle() {

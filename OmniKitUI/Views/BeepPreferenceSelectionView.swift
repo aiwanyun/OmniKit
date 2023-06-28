@@ -39,7 +39,7 @@ struct BeepPreferenceSelectionView: View {
         VStack {
             List {
                 Section {
-                    Text(LocalizedString("Confidence reminders are beeps from the pod which can be used to acknowledge selected commands.", comment: "Help text for BeepPreferenceSelectionView")).fixedSize(horizontal: false, vertical: true)
+                    Text(LocalizedString("置信提醒是可以用来确认选定命令的POD的哔哔声。", comment: "Help text for BeepPreferenceSelectionView")).fixedSize(horizontal: false, vertical: true)
                         .padding(.vertical, 10)
                 }
 
@@ -110,15 +110,15 @@ struct BeepPreferenceSelectionView: View {
 
     private var cancelButton: some View {
         Button(action: { self.presentationMode.wrappedValue.dismiss() } ) {
-            Text(LocalizedString("Cancel", comment: "Button title for cancelling low reservoir reminder edit"))
+            Text(LocalizedString("取消", comment: "Button title for cancelling low reservoir reminder edit"))
         }
     }
 
     var saveButtonText: String {
         if saving {
-            return LocalizedString("Saving...", comment: "button title for saving low reservoir reminder while saving")
+            return LocalizedString("保存...", comment: "button title for saving low reservoir reminder while saving")
         } else {
-            return LocalizedString("Save", comment: "button title for saving low reservoir reminder")
+            return LocalizedString("节省", comment: "button title for saving low reservoir reminder")
         }
     }
 
@@ -128,7 +128,7 @@ struct BeepPreferenceSelectionView: View {
 
     private func alert(error: Error?) -> SwiftUI.Alert {
         return SwiftUI.Alert(
-            title: Text(LocalizedString("Failed to update confidence reminder preference.", comment: "Alert title for error when updating confidence reminder preference")),
+            title: Text(LocalizedString("无法更新信心提醒偏好。", comment: "Alert title for error when updating confidence reminder preference")),
             message: Text(error?.localizedDescription ?? "No Error")
         )
     }

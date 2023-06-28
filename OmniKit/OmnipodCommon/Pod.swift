@@ -127,21 +127,21 @@ public enum DeliveryStatus: UInt8, CustomStringConvertible {
     public var description: String {
         switch self {
         case .suspended:
-            return LocalizedString("Suspended", comment: "Delivery status when insulin delivery is suspended")
+            return LocalizedString("暂停", comment: "Delivery status when insulin delivery is suspended")
         case .scheduledBasal:
-            return LocalizedString("Scheduled basal", comment: "Delivery status when scheduled basal is running")
+            return LocalizedString("计划的基础", comment: "Delivery status when scheduled basal is running")
         case .tempBasalRunning:
-            return LocalizedString("Temp basal running", comment: "Delivery status when temp basal is running")
+            return LocalizedString("临时运行", comment: "Delivery status when temp basal is running")
         case .priming:
-            return LocalizedString("Priming", comment: "Delivery status when pod is priming")
+            return LocalizedString("启动", comment: "Delivery status when pod is priming")
         case .bolusInProgress:
-            return LocalizedString("Bolusing", comment: "Delivery status when bolusing")
+            return LocalizedString("bolusis", comment: "Delivery status when bolusing")
         case .bolusAndTempBasal:
-            return LocalizedString("Bolusing with temp basal", comment: "Delivery status when bolusing and temp basal is running")
+            return LocalizedString("用温度基础加固", comment: "Delivery status when bolusing and temp basal is running")
         case .extendedBolusRunning:
-            return LocalizedString("Extended bolus running", comment: "Delivery status when extended bolus is running")
+            return LocalizedString("扩展的推注", comment: "Delivery status when extended bolus is running")
         case .extendedBolusAndTempBasal:
-            return LocalizedString("Extended bolus running with temp basal", comment: "Delivery status when extended bolus and temp basal is running")
+            return LocalizedString("延长的推注与温度基的跑步", comment: "Delivery status when extended bolus and temp basal is running")
         }
     }
 }

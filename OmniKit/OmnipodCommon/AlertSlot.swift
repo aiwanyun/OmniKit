@@ -91,26 +91,26 @@ public enum PodAlert: CustomStringConvertible, RawRepresentable, Equatable {
         var alertName: String
         switch self {
         case .waitingForPairingReminder:
-            return LocalizedString("Waiting for pairing reminder", comment: "Description waiting for pairing reminder")
+            return LocalizedString("等待配对提醒", comment: "Description waiting for pairing reminder")
         case .finishSetupReminder:
-            return LocalizedString("Finish setup reminder", comment: "Description for finish setup reminder")
+            return LocalizedString("完成设置提醒", comment: "Description for finish setup reminder")
         case .expirationReminder:
-            alertName = LocalizedString("Expiration alert", comment: "Description for expiration alert")
+            alertName = LocalizedString("到期警报", comment: "Description for expiration alert")
         case .expired:
-            alertName = LocalizedString("Expiration advisory", comment: "Description for expiration advisory")
+            alertName = LocalizedString("到期咨询", comment: "Description for expiration advisory")
         case .shutdownImminent:
-            alertName = LocalizedString("Shutdown imminent", comment: "Description for shutdown imminent")
+            alertName = LocalizedString("迫在眉睫", comment: "Description for shutdown imminent")
         case .lowReservoir(let units):
             alertName = String(format: LocalizedString("Low reservoir advisory (%1$gU)", comment: "Format string for description for low reservoir advisory (1: reminder units)"), units)
         case .autoOff:
-            alertName = LocalizedString("Auto-off", comment: "Description for auto-off")
+            alertName = LocalizedString("自动关闭", comment: "Description for auto-off")
         case .podSuspendedReminder:
-            alertName = LocalizedString("Pod suspended reminder", comment: "Description for pod suspended reminder")
+            alertName = LocalizedString("吊舱暂停提醒", comment: "Description for pod suspended reminder")
         case .suspendTimeExpired:
-            alertName = LocalizedString("Suspend time expired", comment: "Description for suspend time expired")
+            alertName = LocalizedString("暂停时间过期", comment: "Description for suspend time expired")
         }
         if self.configuration.active == false {
-            alertName += LocalizedString(" (inactive)", comment: "Description for an inactive alert modifier")
+            alertName += LocalizedString("（非活动）", comment: "Description for an inactive alert modifier")
         }
         return alertName
     }
@@ -357,7 +357,7 @@ public struct AlertSet: RawRepresentable, Collection, CustomStringConvertible, E
 
     public var description: String {
         if elements.count == 0 {
-            return LocalizedString("No alerts", comment: "Pod alert state when no alerts are active")
+            return LocalizedString("没有警报", comment: "Pod alert state when no alerts are active")
         } else {
             let alarmDescriptions = elements.map { String(describing: $0) }
             return alarmDescriptions.joined(separator: ", ")

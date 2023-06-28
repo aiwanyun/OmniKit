@@ -24,8 +24,8 @@ struct InsertCannulaView: View {
 
                 HStack {
                     InstructionList(instructions: [
-                        LocalizedString("Tap below to start cannula insertion.", comment: "Label text for step one of insert cannula instructions"),
-                        LocalizedString("Wait until insertion is completed.", comment: "Label text for step two of insert cannula instructions"),
+                        LocalizedString("点击下面开始插入套管。", comment: "Label text for step one of insert cannula instructions"),
+                        LocalizedString("等到插入完成。", comment: "Label text for step two of insert cannula instructions"),
                     ])
                     .disabled(viewModel.state.instructionsDisabled)
 
@@ -45,7 +45,7 @@ struct InsertCannulaView: View {
                         VStack {
                             ProgressIndicatorView(state: self.viewModel.state.progressState)
                             if self.viewModel.state.isFinished {
-                                FrameworkLocalText("Inserted", comment: "Label text indicating insertion finished.")
+                                FrameworkLocalText("插入", comment: "Label text indicating insertion finished.")
                                     .bold()
                                     .padding(.top)
                             }
@@ -57,7 +57,7 @@ struct InsertCannulaView: View {
                     Button(action: {
                         self.viewModel.didRequestDeactivation?()
                     }) {
-                        Text(LocalizedString("Deactivate Pod", comment: "Button text for deactivate pod button"))
+                        Text(LocalizedString("停用豆荚", comment: "Button text for deactivate pod button"))
                             .accessibility(identifier: "button_deactivate_pod")
                             .actionButtonStyle(.secondary)
                     }
@@ -87,7 +87,7 @@ struct InsertCannulaView: View {
     }
     
     var cancelButton: some View {
-        Button(LocalizedString("Cancel", comment: "Cancel button text in navigation bar on insert cannula screen")) {
+        Button(LocalizedString("取消", comment: "Cancel button text in navigation bar on insert cannula screen")) {
             cancelModalIsPresented = true
         }
         .accessibility(identifier: "button_cancel")
@@ -95,10 +95,10 @@ struct InsertCannulaView: View {
     
     var cancelPairingModal: Alert {
         return Alert(
-            title: FrameworkLocalText("Are you sure you want to cancel Pod setup?", comment: "Alert title for cancel pairing modal"),
-            message: FrameworkLocalText("If you cancel Pod setup, the current Pod will be deactivated and will be unusable.", comment: "Alert message body for confirm pod attachment"),
-            primaryButton: .destructive(FrameworkLocalText("Yes, Deactivate Pod", comment: "Button title for confirm deactivation option"), action: { viewModel.didRequestDeactivation?() } ),
-            secondaryButton: .default(FrameworkLocalText("No, Continue With Pod", comment: "Continue pairing button title of in pairing cancel modal"))
+            title: FrameworkLocalText("您确定要取消POD设置吗？", comment: "Alert title for cancel pairing modal"),
+            message: FrameworkLocalText("如果取消POD设置，则当前POD将被停用，并且将无法使用。", comment: "Alert message body for confirm pod attachment"),
+            primaryButton: .destructive(FrameworkLocalText("是的，停用豆荚", comment: "Button title for confirm deactivation option"), action: { viewModel.didRequestDeactivation?() } ),
+            secondaryButton: .default(FrameworkLocalText("不，继续使用豆荚", comment: "Continue pairing button title of in pairing cancel modal"))
         )
     }
 

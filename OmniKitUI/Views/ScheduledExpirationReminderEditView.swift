@@ -44,12 +44,12 @@ struct ScheduledExpirationReminderEditView: View {
     
     var content: some View {
         VStack {
-            RoundedCardScrollView(title: LocalizedString("Scheduled Reminder", comment: "Title for scheduled expiration reminder edit page")) {
+            RoundedCardScrollView(title: LocalizedString("预定的提醒", comment: "Title for scheduled expiration reminder edit page")) {
                 if self.horizontalSizeClass == .compact {
                     // Keep picker outside of card in compact view, because it forces full device width.
                     VStack(spacing: 0) {
                         RoundedCard {
-                            Text(LocalizedString("Scheduled Reminder", comment: "Card title for scheduled reminder"))
+                            Text(LocalizedString("预定的提醒", comment: "Card title for scheduled reminder"))
                             Divider()
                             valueRow
                         }
@@ -59,7 +59,7 @@ struct ScheduledExpirationReminderEditView: View {
 
                 } else {
                     RoundedCard {
-                        Text(LocalizedString("Scheduled Reminder", comment: "Card title for scheduled reminder"))
+                        Text(LocalizedString("预定的提醒", comment: "Card title for scheduled reminder"))
                         Divider()
                         valueRow
                         picker
@@ -80,14 +80,14 @@ struct ScheduledExpirationReminderEditView: View {
     
     var valueRow: some View {
         RoundedCardValueRow(
-            label: LocalizedString("Time", comment: "Label for scheduled expiration reminder row"),
+            label: LocalizedString("时间", comment: "Label for scheduled expiration reminder row"),
             value: scheduledReminderDateString(selectedDate),
             highlightValue: true
         )
     }
     
     var picker: some View {
-        Picker(selection: $selectedDate, label: Text("Numbers")) {
+        Picker(selection: $selectedDate, label: Text("数字")) {
             ForEach(self.allowedDates) { date in
                 Text(scheduledReminderDateString(date)).tag(date as Date?)
             }
@@ -98,9 +98,9 @@ struct ScheduledExpirationReminderEditView: View {
     
     var saveButtonText: String {
         if saving {
-            return LocalizedString("Saving...", comment: "button title for saving scheduled reminder while saving")
+            return LocalizedString("保存...", comment: "button title for saving scheduled reminder while saving")
         } else {
-            return LocalizedString("Save", comment: "button title for saving scheduled reminder")
+            return LocalizedString("节省", comment: "button title for saving scheduled reminder")
         }
     }
     
@@ -121,7 +121,7 @@ struct ScheduledExpirationReminderEditView: View {
         if let scheduledDate = scheduledDate {
             return dateFormatter.string(from: scheduledDate)
         } else {
-            return LocalizedString("No Reminder", comment: "Value text for no expiration reminder")
+            return LocalizedString("没有提醒", comment: "Value text for no expiration reminder")
         }
     }
     
@@ -145,12 +145,12 @@ struct ScheduledExpirationReminderEditView: View {
     }
     
     private var cancelButton: some View {
-        Button(action: { self.onFinish?() } ) { Text(LocalizedString("Cancel", comment: "Button title for cancelling scheduled reminder date edit")) }
+        Button(action: { self.onFinish?() } ) { Text(LocalizedString("取消", comment: "Button title for cancelling scheduled reminder date edit")) }
     }
     
     private func alert(error: Error?) -> SwiftUI.Alert {
         return SwiftUI.Alert(
-            title: Text(LocalizedString("Failed to Update Expiration Reminder", comment: "Alert title for error when updating expiration reminder")),
+            title: Text(LocalizedString("无法更新到期提醒", comment: "Alert title for error when updating expiration reminder")),
             message: Text(error?.localizedDescription ?? "No Error")
         )
     }

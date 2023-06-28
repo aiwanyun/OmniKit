@@ -126,7 +126,7 @@ struct BasalStateSwiftUIViewPreviewWrapper: View {
             Button(action: {
                 self.percent = self.percent * -1
             }) {
-                Text("Toggle sign")
+                Text("切换标志")
             }
             Text("Percent = \(percent)")
         }
