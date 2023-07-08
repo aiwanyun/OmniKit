@@ -143,7 +143,7 @@ struct ManualTempBasalEntryView: View {
     var missingConfigAlert: SwiftUI.Alert {
         return SwiftUI.Alert(
             title: Text(LocalizedString("缺少配置", comment: "Alert title for missing temp basal configuration")),
-            message: Text(LocalizedString("该泵尚未配置为最大基础速率，因为它在手动温度基础是一个功能之前添加。请转到治疗设置 - >交货限制并设定新的最大基础速度。", comment: "Alert format string for missing temp basal configuration."))
+            message: Text(LocalizedString("该泵尚未配置为最大基础速率，因为它在手动温度基础是一个功能之前添加。请转到治疗设置 - >输入限制并设定新的最大基础速度。", comment: "Alert format string for missing temp basal configuration."))
         )
     }
 
