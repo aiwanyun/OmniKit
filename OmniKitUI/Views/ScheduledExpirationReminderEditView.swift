@@ -100,7 +100,7 @@ struct ScheduledExpirationReminderEditView: View {
         if saving {
             return LocalizedString("保存...", comment: "button title for saving scheduled reminder while saving")
         } else {
-            return LocalizedString("节省", comment: "button title for saving scheduled reminder")
+            return LocalizedString("保存", comment: "button title for saving scheduled reminder")
         }
     }
     

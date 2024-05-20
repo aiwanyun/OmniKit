@@ -29,9 +29,9 @@ public enum BeepPreference: Int, CaseIterable {
         case .silent:
             return LocalizedString("没有使用信心提醒。", comment: "Description for BeepPreference.silent")
         case .manualCommands:
-            return LocalizedString("信心提醒将听起来您发起的命令，例如推注，取消推注，暂停，简历，保存通知提醒等。当循环自动调整交付时，不使用信心提醒。", comment: "Description for BeepPreference.manualCommands")
+            return LocalizedString("信心提醒将听起来您发起的命令，例如推注，取消推注，暂停，简历，保存通知提醒等。当闭环自动调整交付时，不使用信心提醒。", comment: "Description for BeepPreference.manualCommands")
         case .extended:
-            return LocalizedString("当循环自动调整交付以及您发起的命令时，置信提醒将听起来。", comment: "Description for BeepPreference.extended")
+            return LocalizedString("当闭环自动调整交付以及您发起的命令时，置信提醒将听起来。", comment: "Description for BeepPreference.extended")
         }
     }
 

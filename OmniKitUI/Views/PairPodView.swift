@@ -22,8 +22,8 @@ struct PairPodView: View {
 
                 HStack {
                     InstructionList(instructions: [
-                        LocalizedString("用U-100胰岛素填充新的豆荚（留在吊舱针盖上）。听2个哔哔声。", comment: "Label text for step 1 of pair pod instructions"),
-                        LocalizedString("配对期间，将Rileylink距离豆荚约6英寸。", comment: "Label text for step 2 of pair pod instructions")
+                        LocalizedString("用U-100胰岛素填充新的Pod（留下透明的荚针盖）。听2个哔哔声。", comment: "Label text for step 1 of pair pod instructions"),
+                        LocalizedString("配对期间，将Rileylink距离Pod约6英寸。", comment: "Label text for step 2 of pair pod instructions")
                     ])
                     .disabled(viewModel.state.instructionsDisabled)
                 }
@@ -54,7 +54,7 @@ struct PairPodView: View {
                     Button(action: {
                         self.viewModel.didRequestDeactivation?()
                     }) {
-                        Text(LocalizedString("停用豆荚", comment: "Button text for deactivate pod button"))
+                        Text(LocalizedString("停用Pod", comment: "Button text for deactivate pod button"))
                             .accessibility(identifier: "button_deactivate_pod")
                             .actionButtonStyle(.destructive)
                     }
@@ -78,7 +78,7 @@ struct PairPodView: View {
             .padding()
         }
         .alert(isPresented: $cancelModalIsPresented) { cancelPairingModal }
-        .navigationBarTitle(LocalizedString("配对豆荚", comment: "Navigation bar title for PairPodView"), displayMode: .automatic)
+        .navigationBarTitle(LocalizedString("配对Pod", comment: "Navigation bar title for PairPodView"), displayMode: .automatic)
         .navigationBarBackButtonHidden(self.viewModel.backButtonHidden)
         .navigationBarItems(trailing: self.viewModel.state.navBarVisible ? cancelButton : nil)
     }
@@ -99,8 +99,8 @@ struct PairPodView: View {
         return Alert(
             title: FrameworkLocalText("您确定要取消POD设置吗？", comment: "Alert title for cancel pairing modal"),
             message: FrameworkLocalText("如果取消POD设置，则当前POD将被停用，并且将无法使用。", comment: "Alert message body for confirm pod attachment"),
-            primaryButton: .destructive(FrameworkLocalText("是的，停用豆荚", comment: "Button title for confirm deactivation option"), action: { viewModel.didRequestDeactivation?() }),
-            secondaryButton: .default(FrameworkLocalText("不，继续使用豆荚", comment: "Continue pairing button title of in pairing cancel modal"))
+            primaryButton: .destructive(FrameworkLocalText("是的，停用Pod", comment: "Button title for confirm deactivation option"), action: { viewModel.didRequestDeactivation?() }),
+            secondaryButton: .default(FrameworkLocalText("不，继续使用Pod", comment: "Continue pairing button title of in pairing cancel modal"))
         )
     }
 

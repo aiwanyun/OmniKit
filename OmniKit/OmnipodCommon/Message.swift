@@ -28,13 +28,13 @@ extension MessageError: LocalizedError {
         case .invalidSequence:
             return LocalizedString("意外消息序列编号", comment: "Description for MessageError invalidSequence")
         case .invalidAddress(address: let address):
-            return String(format: LocalizedString("无效地址：(%1$@)", comment: "Description for MessageError invalidAddress"), String(format: "%08x", address))
+            return String(format: LocalizedString("Invalid address: (%1$@)", comment: "Description for MessageError invalidAddress"), String(format: "%08x", address))
         case .parsingError(let offset, let data, let error):
-            return String(format: LocalizedString("解析错误：(%2$@) 中的 %1$@", comment: "Description for MessageError parsingError. (1: decription of error), (2: hexadecimal data starting at offset)"), String(describing: error), data.suffix(from: offset).hexadecimalString)
+            return String(format: LocalizedString("Parsing Error: %1$@ in (%2$@)", comment: "Description for MessageError parsingError. (1: decription of error), (2: hexadecimal data starting at offset)"), String(describing: error), data.suffix(from: offset).hexadecimalString)
         case .unknownValue(let value, let typeDescription):
-            return String(format: LocalizedString("类型 %2$@ 的未知值 (%1$@)", comment: "Format string for description of MessageError unknownValue. (1: value) (2: Type)"), String(describing: value), typeDescription)
+            return String(format: LocalizedString("Unknown Value (%1$@) for type %2$@", comment: "Format string for description of MessageError unknownValue. (1: value) (2: Type)"), String(describing: value), typeDescription)
         case .validationFailed(let description):
-            return String(format: LocalizedString("验证失败：%1$@", comment: "Format string for description of MessageError validationFailed. (1: description of validation failure)"), description)
+            return String(format: LocalizedString("Validation failed: %1$@", comment: "Format string for description of MessageError validationFailed. (1: description of validation failure)"), description)
         }
     }
 }

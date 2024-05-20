@@ -129,7 +129,7 @@
 "Initialized" = "Klargjort";
 
 /* Pod state when inserting cannula */
-"Inserting cannula" = "Skyter inn kanyle";
+"Inserting cannula" = "Innsetting av kanyle";
 
 /* The default notification body for AlarmCodes */
 "Insulin delivery stopped. Change Pod now." = "Insulintilførselen stoppet. Bytt Pod nå.";
@@ -247,7 +247,7 @@
 "oneNotUsed" = "oneNotUsed";
 
 /* Pod status after pairing */
-"Paired" = "Sammenkoblbet";
+"Paired" = "Sammenkoblet";
 
 /* Pod status when pairing completed */
 "Pairing completed" = "Sammenkobling fullført";

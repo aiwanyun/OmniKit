@@ -32,7 +32,7 @@ struct CheckInsertedCannulaView: View {
                     Spacer()
                 }
                 HStack {
-                    FrameworkLocalText("将套管正确插入皮肤时，吊舱顶部的窗户应为粉红色。", comment: "Description of proper cannula insertion").fixedSize(horizontal: false, vertical: true)
+                    FrameworkLocalText("将套管正确插入皮肤时，泵顶部的窗户应为粉红色。", comment: "Description of proper cannula insertion").fixedSize(horizontal: false, vertical: true)
                     Spacer()
                 }.padding(.vertical)
             }
@@ -54,7 +54,7 @@ struct CheckInsertedCannulaView: View {
             }.padding()
         }
         .alert(isPresented: $cancelModalIsPresented) { cancelPairingModal }
-        .navigationBarTitle("Check Cannula", displayMode: .automatic)
+        .navigationBarTitle(LocalizedString("检查套管", comment: "navigation bar title for check cannula"), displayMode: .automatic)
         .navigationBarItems(trailing: cancelButton)
         .navigationBarBackButtonHidden(true)
     }
@@ -70,8 +70,8 @@ struct CheckInsertedCannulaView: View {
         return Alert(
             title: FrameworkLocalText("您确定要取消POD设置吗？", comment: "Alert title for cancel pairing modal"),
             message: FrameworkLocalText("如果取消POD设置，则当前POD将被停用，并且将无法使用。", comment: "Alert message body for confirm pod attachment"),
-            primaryButton: .destructive(FrameworkLocalText("是的，停用豆荚", comment: "Button title for confirm deactivation option"), action: { didRequestDeactivation() } ),
-            secondaryButton: .default(FrameworkLocalText("不，继续使用豆荚", comment: "Continue pairing button title of in pairing cancel modal"))
+            primaryButton: .destructive(FrameworkLocalText("是的，停用Pod", comment: "Button title for confirm deactivation option"), action: { didRequestDeactivation() } ),
+            secondaryButton: .default(FrameworkLocalText("不，继续使用Pod", comment: "Continue pairing button title of in pairing cancel modal"))
         )
     }
 

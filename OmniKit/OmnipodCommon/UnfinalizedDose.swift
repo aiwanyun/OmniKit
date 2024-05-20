@@ -147,7 +147,9 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         }
 
         scheduledUnits = units
-        let newDuration = date.timeIntervalSince(startTime)
+        
+        // Guard against negative duration if clock has changed
+        let newDuration = max(0, date.timeIntervalSince(startTime))
 
         switch doseType {
         case .bolus:
@@ -184,31 +186,31 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         case .bolus:
             if let scheduledUnits = scheduledUnits {
                 let scheduledUnitsStr = insulinFormatter.string(from: scheduledUnits) ?? "?"
-                return String(format: LocalizedString("中断推注：%1$@ U（%2$@ U 已计划）%3$@ %4$@ %5$@", comment: "The format string describing a bolus that was interrupted. (1: The amount delivered)(2: The amount scheduled)(3: Start time of the dose)(4: duration)(5: scheduled certainty)"), unitsStr, scheduledUnitsStr, startTimeStr, durationStr, scheduledCertainty.localizedDescription)
+                return String(format: LocalizedString("InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@", comment: "The format string describing a bolus that was interrupted. (1: The amount delivered)(2: The amount scheduled)(3: Start time of the dose)(4: duration)(5: scheduled certainty)"), unitsStr, scheduledUnitsStr, startTimeStr, durationStr, scheduledCertainty.localizedDescription)
             } else {
-                return String(format: LocalizedString("推注：%1$@U %2$@ %3$@ %4$@", comment: "The format string describing a bolus. (1: The amount delivered)(2: Start time of the dose)(3: duration)(4: scheduled certainty)"), unitsStr, startTimeStr, durationStr, scheduledCertainty.localizedDescription)
+                return String(format: LocalizedString("Bolus: %1$@U %2$@ %3$@ %4$@", comment: "The format string describing a bolus. (1: The amount delivered)(2: Start time of the dose)(3: duration)(4: scheduled certainty)"), unitsStr, startTimeStr, durationStr, scheduledCertainty.localizedDescription)
             }
         case .tempBasal:
             let volumeStr = insulinFormatter.string(from: units) ?? "?"
             let rateStr = NumberFormatter.localizedString(from: NSNumber(value: scheduledTempRate ?? rate), number: .decimal)
-            return String(format: LocalizedString("临时基础: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@", comment: "The format string describing a temp basal. (1: The rate)(2: Start time)(3: duration)(4: volume)(5: scheduled certainty"), rateStr, startTimeStr, durationStr, volumeStr, scheduledCertainty.localizedDescription)
+            return String(format: LocalizedString("TempBasal: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@", comment: "The format string describing a temp basal. (1: The rate)(2: Start time)(3: duration)(4: volume)(5: scheduled certainty"), rateStr, startTimeStr, durationStr, volumeStr, scheduledCertainty.localizedDescription)
         case .suspend:
-            return String(format: LocalizedString("暂停: %1$@ %2$@", comment: "The format string describing a suspend. (1: Time)(2: Scheduled certainty"), startTimeStr, scheduledCertainty.localizedDescription)
+            return String(format: LocalizedString("Suspend: %1$@ %2$@", comment: "The format string describing a suspend. (1: Time)(2: Scheduled certainty"), startTimeStr, scheduledCertainty.localizedDescription)
         case .resume:
-            return String(format: LocalizedString("重启: %1$@ %2$@", comment: "The format string describing a resume. (1: Time)(2: Scheduled certainty"), startTimeStr, scheduledCertainty.localizedDescription)
+            return String(format: LocalizedString("Resume: %1$@ %2$@", comment: "The format string describing a resume. (1: Time)(2: Scheduled certainty"), startTimeStr, scheduledCertainty.localizedDescription)
         }
     }
 
     public var eventTitle: String {
         switch doseType {
         case .bolus:
-            return LocalizedString("大剂量", comment: "Pump Event title for UnfinalizedDose with doseType of .bolus")
+            return LocalizedString("推注", comment: "Pump Event title for UnfinalizedDose with doseType of .bolus")
         case .resume:
             return LocalizedString("恢复", comment: "Pump Event title for UnfinalizedDose with doseType of .resume")
         case .suspend:
             return LocalizedString("暂停", comment: "Pump Event title for UnfinalizedDose with doseType of .suspend")
         case .tempBasal:
-            return LocalizedString("温度基", comment: "Pump Event title for UnfinalizedDose with doseType of .tempBasal")
+            return LocalizedString("临时基础率", comment: "Pump Event title for UnfinalizedDose with doseType of .tempBasal")
         }
     }
 

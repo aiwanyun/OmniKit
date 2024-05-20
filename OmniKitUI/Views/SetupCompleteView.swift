@@ -40,7 +40,7 @@ struct SetupCompleteView: View {
         GuidePage(content: {
             VStack {
                 LeadingImage("Pod")
-                Text(String(format: LocalizedString("您的 Pod 已可供使用。\n\n%1$@ 将提醒您在 Pod 过期之前更换它。 您可以将其更改为您方便的时间。", comment: "Format string for instructions for setup complete view. (1: app name)"), appName))
+                Text(LocalizedString("Your Pod is ready for use.\n\nThe default reminder was scheduled for this Pod at setup. You can change the reminder to a more convenient time in Pod Notification Settings.", comment: "Format string for instructions for setup complete view"))
                     .fixedSize(horizontal: false, vertical: true)
                 Divider()
                 VStack(alignment: .leading) {
@@ -83,7 +83,7 @@ struct SetupCompleteView: View {
             .background(Color(UIColor.systemBackground))
             .zIndex(1)
         }
-        .navigationBarTitle("Setup Complete", displayMode: .automatic)
+        .navigationBarTitle(LocalizedString("设置完成", comment: "Title of SetupCompleteView"), displayMode: .automatic)
     }
     
     private func scheduledReminderDateString(_ scheduledDate: Date?) -> String {

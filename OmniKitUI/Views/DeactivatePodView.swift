@@ -8,6 +8,7 @@
 
 import SwiftUI
 import LoopKitUI
+import SlideButton
 
 struct DeactivatePodView: View {
     
@@ -59,26 +60,19 @@ struct DeactivatePodView: View {
                             viewModel.discardPod()
                         }
                     }) {
-                        FrameworkLocalText("丢弃豆荚", comment: "Text for discard pod button")
+                        FrameworkLocalText("丢弃Pod", comment: "Text for discard pod button")
                             .accessibility(identifier: "button_discard_pod_action")
                             .actionButtonStyle(.destructive)
                     }
                     .disabled(viewModel.state.isProcessing)
                 }
-                Button(action: {
-                    viewModel.continueButtonTapped()
-                }) {
-                    Text(viewModel.state.actionButtonDescription)
-                        .accessibility(identifier: "button_next_action")
-                        .accessibility(label: Text(viewModel.state.actionButtonAccessibilityLabel))
-                        .actionButtonStyle(viewModel.state.actionButtonStyle)
-                }
-                .disabled(viewModel.state.isProcessing)
+                actionButton
+                    .disabled(viewModel.state.isProcessing)
             }
             .padding()
         }
         .alert(isPresented: $removePodModalIsPresented) { removePodModal }
-        .navigationBarTitle("Deactivate Pod", displayMode: .automatic)
+        .navigationBarTitle(LocalizedString("停用Pod", comment: "navigation bar title for deactivate pod"), displayMode: .automatic)
         .navigationBarItems(trailing:
             Button("Cancel") {
                 viewModel.didCancel?()
@@ -88,10 +82,36 @@ struct DeactivatePodView: View {
     
     var removePodModal: Alert {
         return Alert(
-            title: FrameworkLocalText("从身体上取下豆荚", comment: "Title for remove pod modal"),
+            title: FrameworkLocalText("从身体上取下Pod", comment: "Title for remove pod modal"),
             message: FrameworkLocalText("Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“", comment: "Alert message body for confirm pod attachment"),
             primaryButton: .cancel(),
             secondaryButton: .default(FrameworkLocalText("继续", comment: "Title of button to continue discard"), action: { viewModel.discardPod() })
         )
     }
+    
+    var actionText: some View {
+        Text(self.viewModel.state.actionButtonDescription)
+            .accessibility(identifier: "button_next_action")
+            .accessibility(label: Text(self.viewModel.state.actionButtonAccessibilityLabel))
+            .font(.headline)
+    }
+    
+    @ViewBuilder
+    var actionButton: some View {
+        if self.viewModel.stateNeedsDeliberateUserAcceptance {
+            SlideButton(styling: .init(indicatorSize: 60, indicatorColor: Color.red), action: {
+                self.viewModel.continueButtonTapped()
+            }) {
+                actionText
+            }
+        } else {
+            Button(action: {
+                self.viewModel.continueButtonTapped()
+            }) {
+                actionText
+                    .actionButtonStyle(.primary)
+            }
+        }
+    }
+
 }

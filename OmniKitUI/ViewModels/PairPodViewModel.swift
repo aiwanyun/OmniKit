@@ -22,7 +22,7 @@ class PairPodViewModel: ObservableObject, Identifiable {
             case .cancel:
                 return LocalizedString("取消", comment: "Pairing interface navigation bar button text for cancel action")
             case .discard:
-                return LocalizedString("丢弃豆荚", comment: "Pairing interface navigation bar button text for discard pod action")
+                return LocalizedString("丢弃Pod", comment: "Pairing interface navigation bar button text for discard pod action")
             }
         }
 
@@ -39,7 +39,7 @@ class PairPodViewModel: ObservableObject, Identifiable {
     enum PairPodViewModelState {
         case ready
         case pairing
-        case priming(finishTime: CFTimeInterval)
+        case priming(finishTime: CFTimeInterval?)
         case error(OmnipodPairingError)
         case finished
         
@@ -57,7 +57,7 @@ class PairPodViewModel: ObservableObject, Identifiable {
         var actionButtonAccessibilityLabel: String {
             switch self {
             case .ready:
-                return LocalizedString("配对豆荚。", comment: "Pairing action button accessibility label while ready to pair")
+                return LocalizedString("配对Pod。", comment: "Pairing action button accessibility label while ready to pair")
             case .pairing:
                 return LocalizedString("配对。", comment: "Pairing action button accessibility label while pairing")
             case .priming:
@@ -72,7 +72,7 @@ class PairPodViewModel: ObservableObject, Identifiable {
         var nextActionButtonDescription: String {
             switch self {
             case .ready:
-                return LocalizedString("配对豆荚", comment: "Pod pairing action button text while ready to pair")
+                return LocalizedString("配对Pod", comment: "Pod pairing action button text while ready to pair")
             case .error:
                 return LocalizedString("重试", comment: "Pod pairing action button text while showing error")
             case .pairing:
@@ -85,14 +85,6 @@ class PairPodViewModel: ObservableObject, Identifiable {
         }
         
         var navBarButtonAction: NavBarButtonAction {
-//            switch self {
-//            case .error(_, let podCommState):
-//                if podCommState == .activating {
-//                    return .discard
-//                }
-//            default:
-//                break
-//            }
             return .cancel
         }
         
@@ -119,7 +111,11 @@ class PairPodViewModel: ObservableObject, Identifiable {
             case .pairing:
                 return .indeterminantProgress
             case .priming(let finishTime):
-                return .timedProgress(finishTime: finishTime)
+                if let finishTime {
+                    return .timedProgress(finishTime: finishTime)
+                } else {
+                    return .indeterminantProgress
+                }
             case .finished:
                 return .completed
             }
@@ -152,7 +148,7 @@ class PairPodViewModel: ObservableObject, Identifiable {
     @Published var state: PairPodViewModelState = .ready
     
     var podIsActivated: Bool {
-        return false // podPairer.podCommState != .noPod
+        return podPairer.podCommState != .noPod
     }
     
     var backButtonHidden: Bool {
@@ -173,19 +169,47 @@ class PairPodViewModel: ObservableObject, Identifiable {
 
     var podPairer: PodPairer
 
+    var autoRetryAttempted: Bool
+
     init(podPairer: PodPairer) {
         self.podPairer = podPairer
+        self.autoRetryAttempted = false
+
+        // If resuming, don't wait for the button action
+        if podPairer.podCommState == .activating {
+            pairAndPrime()
+        }
     }
-        
-    private func pair() {
-        state = .pairing
-        
-        podPairer.pair { (status) in
+
+    private func pairAndPrime() {
+        if podPairer.podCommState == .noPod {
+            state = .pairing
+        } else {
+            // Already paired, so resume with the prime
+            state = .priming(finishTime: nil)
+        }
+
+        podPairer.pairAndPrimePod { (status) in
             DispatchQueue.main.async {
                 switch status {
                 case .failure(let error):
-                    let pairingError = OmnipodPairingError.pumpManagerError(error)
-                    self.state = .error(pairingError)
+                    if self.podPairer.podCommState == .noPod {
+                        let pairAndPrimeError = OmnipodPairingError.pumpManagerError(error)
+                        self.state = .error(pairAndPrimeError)
+                    } else if self.autoRetryAttempted {
+                        self.autoRetryAttempted = false // allow for an auto retry on the next user attempt
+                        let pairAndPrimeError = OmnipodPairingError.pumpManagerError(error)
+                        self.state = .error(pairAndPrimeError)
+                    } else {
+                        self.autoRetryAttempted = true
+                        let autoRetryPauseTime = TimeInterval(seconds: 3)
+                        print("### pairAndPrimePod encountered error \(error.localizedDescription), retrying after \(autoRetryPauseTime) seconds")
+                        DispatchQueue.global(qos: .utility).async {
+                            Thread.sleep(forTimeInterval: autoRetryPauseTime)
+
+                            self.pairAndPrime() // handles both pairing or priming failures
+                        }
+                    }
                 case .success(let duration):
                     
                     if duration > 0 {
@@ -208,14 +232,14 @@ class PairPodViewModel: ObservableObject, Identifiable {
                 self.didRequestDeactivation?()
             } else {
                 // Retry
-                pair()
+                pairAndPrime()
             }
         case .finished:
             didFinish?()
         default:
-            pair()
+            pairAndPrime()
         }
-    }    
+    }
 }
 
 // Pairing recovery suggestions
@@ -246,15 +270,16 @@ enum OmnipodPairingError : LocalizedError {
 }
 
 public protocol PodPairer {
-    func pair(completion: @escaping (PumpManagerResult<TimeInterval>) -> Void)
+    func pairAndPrimePod(completion: @escaping (PumpManagerResult<TimeInterval>) -> Void)
     func discardPod(completion: @escaping (Bool) -> ())
+    var podCommState: PodCommState { get }
 }
 
 extension OmnipodPumpManager: PodPairer {
     public func discardPod(completion: @escaping (Bool) -> ()) {
     }
     
-    public func pair(completion: @escaping (PumpManagerResult<TimeInterval>) -> Void) {
+    public func pairAndPrimePod(completion: @escaping (PumpManagerResult<TimeInterval>) -> Void) {
         pairAndPrime(completion: completion)
     }
 }

@@ -88,7 +88,7 @@ public final class OmnipodReservoirView: LevelHUDView, NibLoadable {
                 volumeLabel.isHidden = true
                 if let units = numberFormatter.string(from: Pod.maximumReservoirReading) {
                     volumeLabel.text = String(format: LocalizedString("%@+ U", comment: "Format string for reservoir volume when above maximum reading. (1: The maximum reading)"), units)
-                    accessibilityValue = String(format: LocalizedString("%2$@ 剩余数量多于 %1$@ 单位", comment: "Accessibility format string for (1: localized volume)(2: time)"), units, time)
+                    accessibilityValue = String(format: LocalizedString("Greater than %1$@ units remaining at %2$@", comment: "Accessibility format string for (1: localized volume)(2: time)"), units, time)
                 }
             case .valid(let value):
                 level = reservoirLevel.percentage
@@ -97,7 +97,7 @@ public final class OmnipodReservoirView: LevelHUDView, NibLoadable {
                 if let units = numberFormatter.string(from: value) {
                     volumeLabel.text = String(format: LocalizedString("%@U", comment: "Format string for reservoir volume. (1: The localized volume)"), units)
 
-                    accessibilityValue = String(format: LocalizedString("%2$@ 剩余 %1$@ 单位", comment: "Accessibility format string for (1: localized volume)(2: time)"), units, time)
+                    accessibilityValue = String(format: LocalizedString("%1$@ units remaining at %2$@", comment: "Accessibility format string for (1: localized volume)(2: time)"), units, time)
                 }
             }
         } else {

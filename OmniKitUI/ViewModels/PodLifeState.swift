@@ -59,20 +59,20 @@ enum PodLifeState {
         case .podActivating:
             return LocalizedString("未完成的激活", comment: "Label for pod life state when pod not fully activated")
         case .timeRemaining:
-            return LocalizedString("豆荚到期", comment: "Label for pod life state when time remaining")
+            return LocalizedString("Pod到期", comment: "Label for pod life state when time remaining")
         case .expired:
-            return LocalizedString("豆荚过期", comment: "Label for pod life state when within pod expiration window")
+            return LocalizedString("Pod过期", comment: "Label for pod life state when within pod expiration window")
         case .podDeactivating:
             return LocalizedString("未完成的停用", comment: "Label for pod life state when pod not fully deactivated")
         case .noPod:
-            return LocalizedString("没有豆荚", comment: "Label for pod life state when no pod paired")
+            return LocalizedString("没有Pod", comment: "Label for pod life state when no pod paired")
         }
     }
 
     var nextPodLifecycleAction: OmnipodUIScreen {
         switch self {
         case .podActivating, .noPod:
-            return .pairPod
+            return .pairAndPrime
         default:
             return .deactivate
         }
@@ -81,11 +81,11 @@ enum PodLifeState {
     var nextPodLifecycleActionDescription: String {
         switch self {
         case .podActivating, .noPod:
-            return LocalizedString("配对豆荚", comment: "Settings page link description when next lifecycle action is to pair new pod")
+            return LocalizedString("配对Pod", comment: "Settings page link description when next lifecycle action is to pair new pod")
         case .podDeactivating:
             return LocalizedString("完成停用", comment: "Settings page link description when next lifecycle action is to finish deactivation")
         default:
-            return LocalizedString("更换吊舱", comment: "Settings page link description when next lifecycle action is to replace pod")
+            return LocalizedString("更换泵", comment: "Settings page link description when next lifecycle action is to replace pod")
         }
     }
     

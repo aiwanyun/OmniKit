@@ -35,14 +35,14 @@ struct NotificationSettingsView: View {
         RoundedCardScrollView {
             RoundedCard(
                 title: LocalizedString("Omnipod提醒", comment: "Title for omnipod reminders section"),
-                footer: LocalizedString("该应用程序在POD上配置提醒，以在POD到期之前通知您。设置您要在配对新吊舱时要配置的提前小时数。", comment: "Footer text for omnipod reminders section")
+                footer: LocalizedString("在POD设置期间配置了提醒，以便在其到期之前通知您。设置提前通知的小时数，默认情况下，在配对新泵时要配置。", comment: "Footer text for omnipod reminders section")
             ) {
                 ExpirationReminderPickerView(expirationReminderDefault: $expirationReminderDefault)
             }
 
             if let allowedDates = allowedScheduledReminderDates {
                 RoundedCard(
-                    footer: LocalizedString("这是您在配对当前吊舱时安排的提醒。", comment: "Footer text for scheduled reminder area"))
+                    footer: LocalizedString("当前POD的到期提醒时间。", comment: "Footer text for scheduled reminder area"))
                 {
                     Text(LocalizedString("预定的提醒", comment: "Scheduled reminder card title on NotificationSettingsView"))
                     Divider()
@@ -50,13 +50,13 @@ struct NotificationSettingsView: View {
                 }
             }
 
-            RoundedCard(footer: LocalizedString("当POD中的胰岛素量达到此水平时，该应用程序会通知您。", comment: "Footer text for low reservoir value row")) {
+            RoundedCard(footer: LocalizedString("当POD中的胰岛素量达到此水平时，您将收到通知。", comment: "Footer text for low reservoir value row")) {
                 lowReservoirValueRow
             }
 
             RoundedCard<EmptyView>(
                 title: LocalizedString("关键警报", comment: "Title for critical alerts description"),
-                footer: LocalizedString("如果您的设备处于静音或请勿打扰模式，则上述提醒不会响起。\n\n即使您的设备设置为静音或请勿打扰模式，其他重要的 Pod 警报和警报也会响起。", comment: "Description text for critical alerts")
+                footer: LocalizedString("The reminders above will not sound on your device when it is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound on your device even when set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced.", comment: "Description text for critical alerts")
             )
         }
         .navigationBarTitle(LocalizedString("通知设置", comment: "navigation title for notification settings"))
@@ -66,7 +66,8 @@ struct NotificationSettingsView: View {
     
     private func scheduledReminderRow(scheduledDate: Date?, allowedDates: [Date]) -> some View {
         Group {
-            if let scheduledDate = scheduledDate, scheduledDate <= Date() {
+            // Make the expiration reminder time read-only if there aren't any more available times.
+            if allowedDates.isEmpty {
                 scheduledReminderRowContents(disclosure: false)
             } else {
                 NavigationLink(
@@ -124,14 +125,15 @@ struct NotificationSettingsView: View {
 struct NotificationSettingsView_Previews: PreviewProvider {
     static var previews: some View {
         return Group {
+            let now = Date()
             NavigationView {
-                NotificationSettingsView(dateFormatter: DateFormatter(), expirationReminderDefault: .constant(2), scheduledReminderDate: Date(), allowedScheduledReminderDates: [Date()], lowReservoirReminderValue: 20)
+                NotificationSettingsView(dateFormatter: DateFormatter(), expirationReminderDefault: .constant(2), scheduledReminderDate: now + TimeInterval(hours: 1), allowedScheduledReminderDates: [now, now - TimeInterval(hours: 2), now - TimeInterval(hours: 3)], lowReservoirReminderValue: 20)
                     .previewDevice(PreviewDevice(rawValue:"iPod touch (7th generation)"))
                     .previewDisplayName("iPod touch (7th generation)")
             }
 
             NavigationView {
-                NotificationSettingsView(dateFormatter: DateFormatter(), expirationReminderDefault: .constant(2), scheduledReminderDate: Date(), allowedScheduledReminderDates: [Date()], lowReservoirReminderValue: 20)
+                NotificationSettingsView(dateFormatter: DateFormatter(), expirationReminderDefault: .constant(2), scheduledReminderDate: now + TimeInterval(hours: 1), allowedScheduledReminderDates: [now, now - TimeInterval(hours: 2), now - TimeInterval(hours: 3)], lowReservoirReminderValue: 20)
                     .colorScheme(.dark)
                     .previewDevice(PreviewDevice(rawValue: "iPhone XS Max"))
                     .previewDisplayName("iPhone XS Max - Dark")

@@ -14,27 +14,26 @@ import OmniKit
 import RileyLinkBLEKit
 
 struct OmnipodSettingsView: View  {
-    
+
     @ObservedObject var viewModel: OmnipodSettingsViewModel
 
     @ObservedObject var rileyLinkListDataSource: RileyLinkListDataSource
 
     var handleRileyLinkSelection: (RileyLinkDevice) -> Void
-    
+
     @State private var showingDeleteConfirmation = false
-    
-    @State private var showSuspendOptions = false;
 
-    @State private var showManualTempBasalOptions = false;
+    @State private var showSuspendOptions = false
 
-    @State private var showSyncTimeOptions = false;
+    @State private var showManualTempBasalOptions = false
 
-    @State private var sendingTestBeepsCommand = false;
+    @State private var showSyncTimeOptions = false
+
+    @State private var sendingTestBeepsCommand = false
 
     @State private var cancelingTempBasal = false
 
     var supportedInsulinTypes: [InsulinType]
-
 
     @Environment(\.guidanceColors) var guidanceColors
     @Environment(\.insulinTintColor) var insulinTintColor
@@ -117,7 +116,7 @@ struct OmnipodSettingsView: View  {
                         .font(.system(size: 34))
                         .fixedSize()
                         .foregroundColor(viewModel.suspendResumeButtonColor(guidanceColors: guidanceColors))
-                    FrameworkLocalText("胰岛素\n暂停", comment: "Text shown in insulin delivery space when insulin suspended")
+                    FrameworkLocalText("Insulin\nSuspended", comment: "Text shown in insulin delivery space when insulin suspended")
                         .fontWeight(.bold)
                         .fixedSize()
                 }
@@ -137,7 +136,7 @@ struct OmnipodSettingsView: View  {
                         .font(.system(size: 34))
                         .fixedSize()
                         .foregroundColor(guidanceColors.critical)
-                    FrameworkLocalText("没有\n送货", comment: "Text shown in insulin remaining space when no pod is paired")
+                    FrameworkLocalText("No\nDelivery", comment: "Text shown in insulin remaining space when no pod is paired")
                         .fontWeight(.bold)
                         .fixedSize()
                 }
@@ -194,7 +193,7 @@ struct OmnipodSettingsView: View  {
                         .fixedSize()
                         .foregroundColor(guidanceColors.warning)
                     
-                    FrameworkLocalText("没有豆荚", comment: "Text shown in insulin remaining space when no pod is paired").fontWeight(.bold)
+                    FrameworkLocalText("没有Pod", comment: "Text shown in insulin remaining space when no pod is paired").fontWeight(.bold)
                 }
                 
             }
@@ -271,7 +270,10 @@ struct OmnipodSettingsView: View  {
                 VStack(alignment: .trailing) {
                     Button(action: {
                         sendingTestBeepsCommand = true
-                        viewModel.playTestBeeps { _ in
+                        Task { @MainActor in
+                            do {
+                                try await viewModel.playTestBeeps()
+                            }
                             sendingTestBeepsCommand = false
                         }
                     }) {
@@ -286,7 +288,7 @@ struct OmnipodSettingsView: View  {
                     headerImage
 
                     lifecycleProgress
-                    
+
                     HStack(alignment: .top) {
                         deliveryStatus
                         Spacer()
@@ -309,7 +311,7 @@ struct OmnipodSettingsView: View  {
                     }.padding(.vertical, 8)
                 }
             }
-            
+
             Section(header: SectionHeader(label: LocalizedString("活动", comment: "Section header for activity section"))) {
                 suspendResumeRow()
                     .disabled(!self.viewModel.podOk)
@@ -350,7 +352,7 @@ struct OmnipodSettingsView: View  {
                     manualTempBasalRow
                 }
             }
-            .disabled(cancelingTempBasal)
+            .disabled(cancelingTempBasal || !self.viewModel.podOk)
 
             Section(header: HStack {
                 FrameworkLocalText("设备", comment: "Header for devices section of RileyLinkSetupView")
@@ -390,32 +392,47 @@ struct OmnipodSettingsView: View  {
                     Text(self.viewModel.activatedAtString)
                         .foregroundColor(Color.secondary)
                 }
-                
+
                 HStack {
                     if let expiresAt = viewModel.expiresAt, expiresAt < Date() {
-                        FrameworkLocalText("豆荚过期", comment: "Label for pod expiration row, past tense")
+                        FrameworkLocalText("Pod过期", comment: "Label for pod expiration row, past tense")
                     } else {
-                        FrameworkLocalText("豆荚到期", comment: "Label for pod expiration row")
+                        FrameworkLocalText("Pod到期", comment: "Label for pod expiration row")
                     }
                     Spacer()
                     Text(self.viewModel.expiresAtString)
                         .foregroundColor(Color.secondary)
                 }
-                
+
                 if let podDetails = self.viewModel.podDetails {
-                    NavigationLink(destination: PodDetailsView(podDetails: podDetails, title: LocalizedString("设备详细信息", comment: "title for device details page"))) {
-                        FrameworkLocalText("设备详细信息", comment: "Text for device details disclosure row").foregroundColor(Color.primary)
+                    NavigationLink(destination: PodDetailsView(podDetails: podDetails, title: LocalizedString("POD详细信息", comment: "title for pod details page"))) {
+                        FrameworkLocalText("POD详细信息", comment: "Text for pod details disclosure row")
+                            .foregroundColor(Color.primary)
                     }
                 } else {
                     HStack {
-                        FrameworkLocalText("设备详细信息", comment: "Text for device details disclosure row")
+                        FrameworkLocalText("POD详细信息", comment: "Text for pod details disclosure row")
+                        Spacer()
+                        Text(" - ")
+                            .foregroundColor(Color.secondary)
+                    }
+                }
+
+                if let previousPodDetails = viewModel.previousPodDetails {
+                    NavigationLink(destination: PodDetailsView(podDetails: previousPodDetails, title: LocalizedString("以前的Pod", comment: "title for previous pod page"))) {
+                        FrameworkLocalText("以前的POD详细信息", comment: "Text for previous pod details row")
+                            .foregroundColor(Color.primary)
+                    }
+                } else {
+                    HStack {
+                        FrameworkLocalText("以前的POD详细信息", comment: "Text for previous pod details row")
                         Spacer()
                         Text(" - ")
                             .foregroundColor(Color.secondary)
                     }
                 }
             }
-            
+
             Section() {
                 Button(action: {
                     self.viewModel.navigateTo?(self.viewModel.lifeState.nextPodLifecycleAction)
@@ -424,7 +441,7 @@ struct OmnipodSettingsView: View  {
                         .foregroundColor(self.viewModel.lifeState.nextPodLifecycleActionColor)
                 }
             }
-            
+
             Section(header: SectionHeader(label: LocalizedString("配置", comment: "Section header for configuration section")))
             {
                 NavigationLink(destination:
@@ -441,15 +458,25 @@ struct OmnipodSettingsView: View  {
                 }
                 NavigationLink(destination: BeepPreferenceSelectionView(initialValue: viewModel.beepPreference, onSave: viewModel.setConfirmationBeeps)) {
                     HStack {
-                        FrameworkLocalText("信心提醒", comment: "Text for confidence reminders navigation link").foregroundColor(Color.primary)
+                        FrameworkLocalText("信心提醒", comment: "Text for confidence reminders navigation link")
+                            .foregroundColor(Color.primary)
                         Spacer()
                         Text(viewModel.beepPreference.title)
                             .foregroundColor(.secondary)
                     }
                 }
+                NavigationLink(destination: SilencePodSelectionView(initialValue: viewModel.silencePodPreference, onSave: viewModel.setSilencePod)) {
+                    HStack {
+                        FrameworkLocalText("静音Pod", comment: "Text for silence pod navigation link")
+                            .foregroundColor(Color.primary)
+                        Spacer()
+                        Text(viewModel.silencePodPreference.title)
+                            .foregroundColor(.secondary)
+                    }
+                }
                 NavigationLink(destination: InsulinTypeSetting(initialValue: viewModel.insulinType, supportedInsulinTypes: supportedInsulinTypes, allowUnsetInsulinType: false, didChange: viewModel.didChangeInsulinType)) {
                     HStack {
-                        FrameworkLocalText("胰岛素类型", comment: "Text for confidence reminders navigation link").foregroundColor(Color.primary)
+                        FrameworkLocalText("胰岛素类型", comment: "Text for insulin type navigation link").foregroundColor(Color.primary)
                         if let currentTitle = viewModel.insulinType?.brandName {
                             Spacer()
                             Text(currentTitle)
@@ -458,10 +485,10 @@ struct OmnipodSettingsView: View  {
                     }
                 }
             }
-            
+
             Section() {
                 HStack {
-                    FrameworkLocalText("抽水时间", comment: "The title of the command to change pump time zone")
+                    FrameworkLocalText("泵送时间", comment: "The title of the command to change pump time zone")
                     Spacer()
                     if viewModel.isClockOffset {
                         Image(systemName: "clock.fill")
@@ -489,14 +516,17 @@ struct OmnipodSettingsView: View  {
                 }
             }
 
-            if let previousPodDetails = viewModel.previousPodDetails {
-                Section() {
-                    NavigationLink(destination: PodDetailsView(podDetails: previousPodDetails, title: LocalizedString("以前的豆荚", comment: "title for previous pod page"))) {
-                        FrameworkLocalText("以前的POD信息", comment: "Text for previous pod information row").foregroundColor(Color.primary)
-                    }
+            Section() {
+                NavigationLink(destination: PodDiagnosticsView(
+                    title: LocalizedString("POD诊断", comment: "Title for the pod diagnostic view"),
+                    diagnosticCommands: viewModel.diagnosticCommands,
+                    podOk: viewModel.podOk,
+                    noPod: viewModel.noPod))
+                {
+                    FrameworkLocalText("POD诊断", comment: "Text for pod diagnostics row")
+                        .foregroundColor(Color.primary)
                 }
             }
-            
 
             if self.viewModel.lifeState.allowsPumpManagerRemoval {
                 Section() {
@@ -538,8 +568,8 @@ struct OmnipodSettingsView: View  {
     
     var suspendOptionsActionSheet: ActionSheet {
         ActionSheet(
-            title: FrameworkLocalText("暂停交货", comment: "Title for suspend duration selection action sheet"),
-            message: FrameworkLocalText("胰岛素输送将停止，直到您手动恢复为止。您什么时候想提醒您恢复交货？", comment: "Message for suspend duration selection action sheet"),
+            title: FrameworkLocalText("暂停交互", comment: "Title for suspend duration selection action sheet"),
+            message: FrameworkLocalText("胰岛素输送将停止，直到您手动恢复为止。选择何时想提醒您恢复交互？", comment: "Message for suspend duration selection action sheet"),
             buttons: [
                 .default(FrameworkLocalText("30分钟", comment: "Button text for 30 minute suspend duration"), action: { self.viewModel.suspendDelivery(duration: .minutes(30)) }),
                 .default(FrameworkLocalText("1小时", comment: "Button text for 1 hour suspend duration"), action: { self.viewModel.suspendDelivery(duration: .hours(1)) }),

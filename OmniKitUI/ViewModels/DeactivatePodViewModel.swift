@@ -20,16 +20,6 @@ extension OmnipodPumpManager: PodDeactivater {}
 
 class DeactivatePodViewModel: ObservableObject, Identifiable {
     
-    public var podAttachedToBody: Bool
-    
-    var instructionText: String {
-        if podAttachedToBody {
-            return LocalizedString("请停用豆荚。停用后，您可以将其删除并配对新的吊舱。", comment: "Instructions for deactivate pod when pod is on body")
-        } else {
-            return LocalizedString("请停用豆荚。停用后，您可以将一个新的吊舱配对。", comment: "Instructions for deactivate pod when pod not on body")
-        }
-    }
-    
     enum DeactivatePodViewModelState {
         case active
         case deactivating
@@ -39,7 +29,7 @@ class DeactivatePodViewModel: ObservableObject, Identifiable {
         var actionButtonAccessibilityLabel: String {
             switch self {
             case .active:
-                return LocalizedString("停用豆荚", comment: "Deactivate pod action button accessibility label while ready to deactivate")
+                return LocalizedString("停用Pod", comment: "Deactivate pod action button accessibility label while ready to deactivate")
             case .deactivating:
                 return LocalizedString("停用。", comment: "Deactivate pod action button accessibility label while deactivating")
             case .resultError(let error):
@@ -52,7 +42,7 @@ class DeactivatePodViewModel: ObservableObject, Identifiable {
         var actionButtonDescription: String {
             switch self {
             case .active:
-                return LocalizedString("停用豆荚", comment: "Action button description for deactivate while pod still active")
+                return LocalizedString("滑动到停用Pod", comment: "Action button description for deactivate while pod still active")
             case .resultError:
                 return LocalizedString("重试", comment: "Action button description for deactivate after failed attempt")
             case .deactivating:
@@ -112,6 +102,15 @@ class DeactivatePodViewModel: ObservableObject, Identifiable {
     
     @Published var state: DeactivatePodViewModelState = .active
 
+    public var stateNeedsDeliberateUserAcceptance : Bool {
+        switch state {
+        case .active:
+            true
+        default:
+            false
+        }
+    }
+
     var error: DeactivationError? {
         if case .resultError(let error) = self.state {
             return error
@@ -125,9 +124,38 @@ class DeactivatePodViewModel: ObservableObject, Identifiable {
     
     var podDeactivator: PodDeactivater
 
-    init(podDeactivator: PodDeactivater, podAttachedToBody: Bool) {
+    var podAttachedToBody: Bool
+
+    var instructionText: String
+
+    init(podDeactivator: PodDeactivater, podAttachedToBody: Bool, fault: DetailedStatus?) {
+
+        var text: String = ""
+        if let faultEventCode = fault?.faultEventCode {
+            let notificationString = faultEventCode.notificationTitle
+            switch faultEventCode.faultType {
+            case .exceededMaximumPodLife80Hrs, .reservoirEmpty, .occluded:
+                // Just prepend a simple sentence with the notification string for these faults.
+                // Other occluded related 0x6? faults will be treated as a general pod error as per the PDM.
+                text = String(format: "%@. ", notificationString)
+            default:
+                // Display the fault code value, the fault description and the pdmRef string for other errors.
+                text = String(format: "⚠️ %1$@ (0x%2$02X)\n%3$@\n", notificationString, faultEventCode.rawValue, faultEventCode.faultDescription)
+                if let pdmRef = fault?.pdmRef {
+                    text += LocalizedString("参考：", comment: "PDM Ref string line") + pdmRef + "\n\n"
+                }
+            }
+        }
+
+        if podAttachedToBody {
+            text += LocalizedString("请停用Pod。停用后，您可以将其删除并配对新的泵。", comment: "Instructions for deactivate pod when pod is on body")
+        } else {
+            text += LocalizedString("请停用Pod。停用后，您可以将一个新的泵配对。", comment: "Instructions for deactivate pod when pod not on body")
+        }
+
         self.podDeactivator = podDeactivator
         self.podAttachedToBody = podAttachedToBody
+        self.instructionText = text
     }
     
     public func continueButtonTapped() {
@@ -166,7 +194,7 @@ enum DeactivationError : LocalizedError {
     var recoverySuggestion: String? {
         switch self {
         case .OmnipodPumpManagerError:
-            return LocalizedString("与豆荚通信存在问题。如果此问题持续存在，请点击丢弃吊舱。然后，您可以激活一个新的吊舱。", comment: "Format string for recovery suggestion during deactivate pod.")
+            return LocalizedString("与Pod通信存在问题。如果此问题持续存在，请点击丢弃泵。然后，您可以激活一个新的泵。", comment: "Format string for recovery suggestion during deactivate pod.")
         }
     }
     
